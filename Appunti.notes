@@ -1,0 +1,42 @@
+﻿Algoritmo ARDA
+  - Calcolo delle traiettorie basato su un modello della fisica dei campi elettrici
+
+Porposta di pesatura dell'importanza delle località
+  - Space Rank
+  - Total Time
+  - Avarage Time
+  - Number of visit
+  - CombLinear(visti, totTime)
+
+Punti
+  - Valutazione dati e percorsi (R pag. 41)
+
+  - Calcolo Matrici di importanza con i 5 indici
+
+  - Valutazione dell'algoritmo ARDA rispetto a:
+    - mantenere la traiettoria in linea retta
+    - proseguire il percorso in un intorno della località
+
+  - Valutiamo come punto di attivo i 25, 50 e 75 del percorso.
+
+  - Valutazione dell'algoritmo rispetto ai metodi di pesatura
+
+  - implemetazione dell'algoritmo da Python a Java
+
+--------------------------------------------------------------------------------------------
+
+Implemetazione
+  - SpaceRank , visit , avgTime, totTime, CombLin(visit, totTime)
+  - Calcolo matrice S (pag 25-28)
+    - A = matrice n*n popolata in base agli spostamente (x,y)
+    - A' = matrice A con valori rapporati all'insieme [0,1] (tutti i numeri / il massimo)
+    - B = matrice calcolata sulle regiorni di A
+    - S = (1 -d) * A' + B' * d (con d = 0.15 come nel PageRank)
+
+Note sullo sviluppo
+
+  - Traduzione da Python a Java
+    - Conversione dei dati in input (diversi da Stefano ad Atlanta)
+    - Unificati i valori di default (conversione da metri a lat/log)
+    - Miglioramento del calcolo delle distanze tra punti (distanza sferica invece che lineare)
+    - Unificazione di tutte le procedure di calcolo e pulizia del codice.
