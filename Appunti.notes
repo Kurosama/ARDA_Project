@@ -40,3 +40,12 @@ Note sullo sviluppo
     - Unificati i valori di default (conversione da metri a lat/log)
     - Miglioramento del calcolo delle distanze tra punti (distanza sferica invece che lineare)
     - Unificazione di tutte le procedure di calcolo e pulizia del codice.
+    - Export in csv (con relativa localizzazione dei formati)
+
+
+################################################
+
+Comandi
+
+javac ..\*.java -d "C:\Users\Alessio\Documents\Personali\Progetti\ARDA_Project\java core\class"
+java Main

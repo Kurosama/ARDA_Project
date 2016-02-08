@@ -1,2 +1,0 @@
-\select@language {italian}
-\contentsline {chapter}{Ringraziamenti}{v}{chapter*.1}

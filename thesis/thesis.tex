@@ -64,7 +64,7 @@
 \usepackage{listings}
 \lstloadlanguages{Matlab}
 
-% Carico il pacchetto color e 
+% Carico il pacchetto color e
 % definisco i colori uguali a quelli di default di matlab
 \usepackage{color}
 \definecolor{commenti}{rgb}{0.13,0.55,0.13}
@@ -355,20 +355,20 @@ breakindent = 30pt, % indenta le righe di 30pt
                %    da usare nell'intestazione      %
                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \titolo{Pre-destinazione:\\ MODELLI ED ESPERIMENTI PER \\ LA PREVISIONE DI TRAIETTORIE}
-  \laureando{Alessio Pellin}
-  \annoaccademico{2012-2013}
-  \facolta{Scienze Matematiche, Fisiche e Naturali} % (default)
-  \corsodilaureatriennale{Informatica}
-  \relatore[Prof.]{Ivan Scagnetto}
-  \dedica{A me stesso perch\'e sono bravo}
-  %\corsodilaurea{Informatica} % per la laurea vecchio ordinamento
- %\corsodilaureatriennale{Matematica}
+ \titolo{Pre-destinazione:\\ MODELLI ED ESPERIMENTI PER \\ LA PREVISIONE DI TRAIETTORIE}
+ \laureando{Alessio Pellin}
+ \annoaccademico{2014-2015}
+ \corsodilaureatriennale{Informatica}
+ \relatore[Prof.]{Ivan Scagnetto}
+ \dedica{A mia moglie Fatima} % (facoltativo)
+
+% \corsodilaurea{Informatica} % per la laurea vecchio ordinamento
+% \corsodilaureatriennale{Matematica}
 % \corsodilaureaspecialistica{Fisica Computazionale}
-%  \relatore[Prof.]{Elio Toppano}
+% \relatore[Prof.]{Elio Toppano}
 % \correlatore{Talaltro dei Tali}
 % \correlatoreDue{Secondo Correlatore}
-%  \dedica{Ai miei genitori\\
+% \dedica{Ai miei genitori\\
 %    per non avermi tagliato i viveri} % (facoltativo)
 
 
@@ -415,6 +415,8 @@ breakindent = 30pt, % indenta le righe di 30pt
 \renewcommand{\theequation}{\arabic{equation}}%consigliato per migliorare i numeri di equazione nell'introduzione
 \renewcommand{\thesection}{\arabic{section}}%consigliato per migliorare i numeri di equazione nell'introduzione
 
+\input{./capitoli/introduzione}
+
 \tableofcontents
 %\listoffigures
 
@@ -423,7 +425,17 @@ breakindent = 30pt, % indenta le righe di 30pt
 \renewcommand{\theequation}{\thechapter.\arabic{equation}}%si torna alle formule numerate come da default
 \renewcommand{\thesection}{\thechapter.\arabic{section}}%si torna alle sezioni numerate come da default
 
+\input{./capitoli/capitolo1}
+\input{./capitoli/capitolo2}
+\input{./capitoli/capitolo3}
+
 \appendix
+
+\input{./extra/appendice}
+
+\backmatter
+
+\input{./extra/bibliografia}
 
 
 % \printindex % se si fa l'indice analitico.

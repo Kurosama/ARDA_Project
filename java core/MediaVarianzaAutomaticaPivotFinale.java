@@ -2,12 +2,16 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
+import java.text.NumberFormat;
+import java.text.DecimalFormat;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.math.RoundingMode;
+
 
 
 /*	(1)serve per trovare tutti i test che desidero in maniera automatica
@@ -30,11 +34,18 @@ public class MediaVarianzaAutomaticaPivotFinale {
 	double Xmin,Ymin,Xmax,Ymax;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy|HH:mm:ss");
 
+	NumberFormat df = DecimalFormat.getInstance();
+
 	public MediaVarianzaAutomaticaPivotFinale(String pathFile,String pathFilePercorsoTest){
 
 		//SETUP parametri test
 		//String pathFile=File+".txt";
 		//String pathFilePercorsoTest="percorso"+pathFile;
+
+		// Setup formato decimali per export csv
+		df.setMinimumFractionDigits(2);
+		df.setMaximumFractionDigits(4);
+		df.setRoundingMode(RoundingMode.DOWN);
 
 		// Faccio dei test parziali solo per velocizzare il processo
 		double[] VettoreDeltaTime0=new double[2];
@@ -71,7 +82,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 		int eseguito=0;
 		String risTemp="";
 		String risPerc="";
-		System.out.println("\n\n############################################ INIZIO DEI TEST M.V.A.Pivot Finale  (1) ###############################################");
+		//System.out.println("\n\n############################################ INIZIO DEI TEST M.V.A.Pivot Finale  (1) ###############################################");
 
 		// Ciclo Indici
 		for(int i=0;i<VettoreIndici.length;i++){
@@ -104,8 +115,8 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 					//######################################################################################
 
-					System.out.println("\n----------------------------------------------------");
-					System.out.println("Test nr: "+(i+1)+" -> |"+indice+"|"+metrilato+"|"+(deltaTimeMassimo/60));
+					//System.out.println("\n----------------------------------------------------");
+					//System.out.println("Test nr: "+(i+1)+" -> |"+indice+"|"+metrilato+"|"+(deltaTimeMassimo/60));
 
 					risultato=esecuzioneTest(risTemp,risPerc,pathFilePercorsoTest,pathFile,metrilato,deltaTimeMassimo,indice,stringaDeltaTime);
 
@@ -113,7 +124,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 					risTemp=risultato[0]; risPerc=risultato[1];
 					eseguito++;
-					System.out.println("\nEseguito "+eseguito+" di "+numTotaleIterazioni+"\n");
+					//System.out.println("\nEseguito "+eseguito+" di "+numTotaleIterazioni+"\n");
 
 					//System.gc();
 
@@ -141,7 +152,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 		}// Ciclo Indici
 
-		System.out.println("\n##########################FINE TEST (1) ##########################\n\n");
+		//System.out.println("\n##########################FINE TEST (1) ##########################\n\n");
 
 	}// MediaVarianzaAutomaticaPivotFinale
 
@@ -182,7 +193,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 		String risTemp="";
 		String risPerc="";
 
-		System.out.println("\n\n############################################ INIZIO DEI TEST M.V.A.Pivot Finale (2) ###############################################");
+		//System.out.println("\n\n############################################ INIZIO DEI TEST M.V.A.Pivot Finale (2) ###############################################");
 
 		for(int w=0;w<VettoreNumIterazSRtoMimp.length;w++){
 			int numeroIterazioniSRtoMimp=VettoreNumIterazSRtoMimp[w];
@@ -196,7 +207,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 					risultato=esecuzioneTest(risTemp,risPerc,pathFilePercorsoTest,pathFile,metrilato1,deltaTimeMassimo,indice,stringaDeltaTime);
 					risTemp=risultato[0]; risPerc=risultato[1];
 					eseguito++;
-					System.out.println("Eseguito "+eseguito+" di "+numTotaleIterazioni);
+					//System.out.println("Eseguito "+eseguito+" di "+numTotaleIterazioni);
 				}
 			}
 		}
@@ -219,7 +230,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 			System.err.println(" (MV 4) Errore: " + e.getMessage());
 		}
 
-		System.out.println("\n########################## FINE TEST (2) ##########################\n\n");
+		//System.out.println("\n########################## FINE TEST (2) ##########################\n\n");
 	}
 
 
@@ -567,12 +578,12 @@ public class MediaVarianzaAutomaticaPivotFinale {
 	    	vettoreDeiRisultatiClusterizzato[i][0]=0;
 	    }
 
-		if(vettoreDiConfronto.size()!=vettorePrevisioni.size())
-			System.out.println("Errore nei vettori vettoreDiConfronto e vettorePrevisioni");
+		//if(vettoreDiConfronto.size()!=vettorePrevisioni.size())
+		//	System.out.println("Errore nei vettori vettoreDiConfronto e vettorePrevisioni");
 
         for(int i=0;i<vettoreDiConfronto.size();i++){
 
-			System.out.println("\n-----> "+i+" di "+vettoreDiConfronto.size());
+			//System.out.println("\n-----> "+i+" di "+vettoreDiConfronto.size());
 
         	int nPunti;
         	//valuto di ricalcolare la distanza nel mio modo (quella sferica)
@@ -658,7 +669,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 			System.out.print("Valori del vettore ");
 			for(int i=0;i<13;i++)
-				System.out.print(vettoreDeiRisultatiClusterizzato[i][0]+"\t");
+				System.out.print(vettoreDeiRisultatiClusterizzato[i][0]+";");
 
 
 			for(int j=0;j<vettoreDeiRisultatiClusterizzato.length;j++){
@@ -668,7 +679,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 					sommaTot+=vettoreDeiRisultatiClusterizzato[j][k];
 				}
 
-			System.out.println();
+			//System.out.println();
 			//System.out.println("sommaTot "+sommaTot+" afferenze"+afferenze+"\n");
 			double mediaInCaselle=(float)sommaTot/(float)afferenze;
 			double varianzaInCaselle=varianza(vettoreDeiRisultatiClusterizzato[j],mediaInCaselle);
@@ -677,109 +688,109 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 			switch(j){
 				case 0:
-					System.out.println("Media errore in caselle range [0s  1s]: "+ mediaInCaselle);
-					System.out.println( "Varianza errore in caselle range [0s  1s]: "+varianzaInCaselle);
-					System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]0s  1s]: "+mediaInCaselle+"\n";
-					s=s+"Varianza errore in caselle range ]0s  1s]: "+varianzaInCaselle+"\n";
+					//System.out.println("Media errore in caselle range [0s  1s]: "+ mediaInCaselle);
+					//System.out.println( "Varianza errore in caselle range [0s  1s]: "+varianzaInCaselle);
+					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+					s=s+"Media errore in caselle range ]0s  1s]: "+df.format(mediaInCaselle)+"\n";
+					s=s+"Varianza errore in caselle range ]0s  1s]: "+df.format(varianzaInCaselle)+"\n";
 					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+"\t"+metriLato+"\t"+stringaDeltaTime+"\t"+"[0s  1s]"+"\t"+mediaInCaselle+"\t"+varianzaInCaselle+"\t"+afferenze+"\n"; break;
+					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"[0s  1s]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
 				case 1:
-					System.out.println( "Media errore in caselle range ]1s  5s]: "+mediaInCaselle);
-					System.out.println( "Varianza errore in caselle range ]1s  5s]: "+varianzaInCaselle);
-					System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]1s  5s]: "+mediaInCaselle+"\n";
-					s=s+"Varianza errore in caselle range ]1s  5s]: "+varianzaInCaselle+"\n";
+					//System.out.println( "Media errore in caselle range ]1s  5s]: "+mediaInCaselle);
+					//System.out.println( "Varianza errore in caselle range ]1s  5s]: "+varianzaInCaselle);
+					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+					s=s+"Media errore in caselle range ]1s  5s]: "+df.format(mediaInCaselle)+"\n";
+					s=s+"Varianza errore in caselle range ]1s  5s]: "+df.format(varianzaInCaselle)+"\n";
 					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+"\t"+metriLato+"\t"+stringaDeltaTime+"\t"+"[1s  5s]"+"\t"+mediaInCaselle+"\t"+varianzaInCaselle+"\t"+afferenze+"\n"; break;
+					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"[1s  5s]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
 				case 2:
-					System.out.println( "Media errore in caselle range ]5s  10s]: "+mediaInCaselle);
-					System.out.println( "Varianza errore in caselle range ]5s  10s]: "+varianzaInCaselle);
-					System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]5s  10s]: "+mediaInCaselle+"\n";
-					s=s+"Varianza errore in caselle range ]5s  10s]: "+varianzaInCaselle+"\n";
+					//System.out.println( "Media errore in caselle range ]5s  10s]: "+mediaInCaselle);
+					//System.out.println( "Varianza errore in caselle range ]5s  10s]: "+varianzaInCaselle);
+					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+					s=s+"Media errore in caselle range ]5s  10s]: "+df.format(mediaInCaselle)+"\n";
+					s=s+"Varianza errore in caselle range ]5s  10s]: "+df.format(varianzaInCaselle)+"\n";
 					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+"\t"+metriLato+"\t"+stringaDeltaTime+"\t"+"]5s  10s]"+"\t"+mediaInCaselle+"\t"+varianzaInCaselle+"\t"+afferenze+"\n"; break;
+					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]5s  10s]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
 				case 3:
-					System.out.println( "Media errore in caselle range ]10s  15s]: "+mediaInCaselle);
-					System.out.println( "Varianza errore in caselle range ]10s  15s]: "+varianzaInCaselle);
-					System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]10s  15s]: "+mediaInCaselle+"\n";
-					s=s+"Varianza errore in caselle range ]10s  15s]: "+varianzaInCaselle+"\n";
+					//System.out.println( "Media errore in caselle range ]10s  15s]: "+mediaInCaselle);
+					//System.out.println( "Varianza errore in caselle range ]10s  15s]: "+varianzaInCaselle);
+					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+					s=s+"Media errore in caselle range ]10s  15s]: "+df.format(mediaInCaselle)+"\n";
+					s=s+"Varianza errore in caselle range ]10s  15s]: "+df.format(varianzaInCaselle)+"\n";
 					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+"\t"+metriLato+"\t"+stringaDeltaTime+"\t"+"]10s  15s]"+"\t"+mediaInCaselle+"\t"+varianzaInCaselle+"\t"+afferenze+"\n"; break;
+					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]10s  15s]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
 				case 4:
-					System.out.println( "Media errore in caselle range ]15s  30s]: "+mediaInCaselle);
-					System.out.println( "Varianza errore in caselle range ]15s  30s]: "+varianzaInCaselle);
-					System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]15s  30s]: "+mediaInCaselle+"\n";
-					s=s+"Varianza errore in caselle range ]15s  30s]: "+varianzaInCaselle+"\n";
+					//System.out.println( "Media errore in caselle range ]15s  30s]: "+mediaInCaselle);
+					//System.out.println( "Varianza errore in caselle range ]15s  30s]: "+varianzaInCaselle);
+					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+					s=s+"Media errore in caselle range ]15s  30s]: "+df.format(mediaInCaselle)+"\n";
+					s=s+"Varianza errore in caselle range ]15s  30s]: "+df.format(varianzaInCaselle)+"\n";
 					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+"\t"+metriLato+"\t"+stringaDeltaTime+"\t"+"]15s  30s]"+"\t"+mediaInCaselle+"\t"+varianzaInCaselle+"\t"+afferenze+"\n"; break;
+					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]15s  30s]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
 				case 5:
-					System.out.println( "Media errore in caselle range ]30s  1m]: "+mediaInCaselle);
-					System.out.println( "Varianza errore in caselle range ]30s  1m]: "+varianzaInCaselle);
-					System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]30s  1m]: "+mediaInCaselle+"\n";
-					s=s+"Varianza errore in caselle range ]30s  1m]: "+varianzaInCaselle+"\n";
+					//System.out.println( "Media errore in caselle range ]30s  1m]: "+mediaInCaselle);
+					//System.out.println( "Varianza errore in caselle range ]30s  1m]: "+varianzaInCaselle);
+					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+					s=s+"Media errore in caselle range ]30s  1m]: "+df.format(mediaInCaselle)+"\n";
+					s=s+"Varianza errore in caselle range ]30s  1m]: "+df.format(varianzaInCaselle)+"\n";
 					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+"\t"+metriLato+"\t"+stringaDeltaTime+"\t"+"]30s  1m]"+"\t"+mediaInCaselle+"\t"+varianzaInCaselle+"\t"+afferenze+"\n"; break;
+					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]30s  1m]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
 				case 6:
-					System.out.println( "Media errore in caselle range ]1m  5m]: "+mediaInCaselle);
-					System.out.println( "Varianza errore in caselle range ]1m  5m]: "+varianzaInCaselle);
-					System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]1m  5m]: "+mediaInCaselle+"\n";
-					s=s+"Varianza errore in caselle range ]1m  5m]: "+varianzaInCaselle+"\n";
+					//System.out.println( "Media errore in caselle range ]1m  5m]: "+mediaInCaselle);
+					//System.out.println( "Varianza errore in caselle range ]1m  5m]: "+varianzaInCaselle);
+					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+					s=s+"Media errore in caselle range ]1m  5m]: "+df.format(mediaInCaselle)+"\n";
+					s=s+"Varianza errore in caselle range ]1m  5m]: "+df.format(varianzaInCaselle)+"\n";
 					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+"\t"+metriLato+"\t"+stringaDeltaTime+"\t"+"]1m  5m]"+"\t"+mediaInCaselle+"\t"+varianzaInCaselle+"\t"+afferenze+"\n"; break;
+					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]1m  5m]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
 				case 7:
-					System.out.println( "Media errore in caselle range ]5m  10m]: "+mediaInCaselle);
-					System.out.println( "Varianza errore in caselle range ]5m  10m]: "+varianzaInCaselle);
-					System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]5m  10m]: "+mediaInCaselle+"\n";
-					s=s+"Varianza errore in caselle range ]5m  10m]: "+varianzaInCaselle+"\n";
+					//System.out.println( "Media errore in caselle range ]5m  10m]: "+mediaInCaselle);
+					//System.out.println( "Varianza errore in caselle range ]5m  10m]: "+varianzaInCaselle);
+					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+					s=s+"Media errore in caselle range ]5m  10m]: "+df.format(mediaInCaselle)+"\n";
+					s=s+"Varianza errore in caselle range ]5m  10m]: "+df.format(varianzaInCaselle)+"\n";
 					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+"\t"+metriLato+"\t"+stringaDeltaTime+"\t"+"]5m  10m]"+"\t"+mediaInCaselle+"\t"+varianzaInCaselle+"\t"+afferenze+"\n"; break;
+					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]5m  10m]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
 				case 8:
-					System.out.println( "Media errore in caselle range ]10m  15m]: "+mediaInCaselle);
-					System.out.println( "Varianza errore in caselle range ]10m  15m]: "+varianzaInCaselle);
-					System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]10m  15m]: "+mediaInCaselle+"\n";
-					s=s+"Varianza errore in caselle range ]10m  15m]: "+varianzaInCaselle+"\n";
+					//System.out.println( "Media errore in caselle range ]10m  15m]: "+mediaInCaselle);
+					//System.out.println( "Varianza errore in caselle range ]10m  15m]: "+varianzaInCaselle);
+					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+					s=s+"Media errore in caselle range ]10m  15m]: "+df.format(mediaInCaselle)+"\n";
+					s=s+"Varianza errore in caselle range ]10m  15m]: "+df.format(varianzaInCaselle)+"\n";
 					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+"\t"+metriLato+"\t"+stringaDeltaTime+"\t"+"]10m  15m]"+"\t"+mediaInCaselle+"\t"+varianzaInCaselle+"\t"+afferenze+"\n"; break;
+					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]10m  15m]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
 				case 9:
-					System.out.println( "Media errore in caselle range ]15m  30m]: "+mediaInCaselle);
-					System.out.println( "Varianza errore in caselle range ]15m  30m]: "+varianzaInCaselle);
-					System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]15m  30m]: "+mediaInCaselle+"\n";
-					s=s+"Varianza errore in caselle range ]15m  30m]: "+varianzaInCaselle+"\n";
+					//System.out.println( "Media errore in caselle range ]15m  30m]: "+mediaInCaselle);
+					//System.out.println( "Varianza errore in caselle range ]15m  30m]: "+varianzaInCaselle);
+					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+					s=s+"Media errore in caselle range ]15m  30m]: "+df.format(mediaInCaselle)+"\n";
+					s=s+"Varianza errore in caselle range ]15m  30m]: "+df.format(varianzaInCaselle)+"\n";
 					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+"\t"+metriLato+"\t"+stringaDeltaTime+"\t"+"]15m  30m]"+"\t"+mediaInCaselle+"\t"+varianzaInCaselle+"\t"+afferenze+"\n"; break;
+					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]15m  30m]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
 				case 10:
-					System.out.println( "Media errore in caselle range ]30m  1h]: "+mediaInCaselle);
-					System.out.println( "Varianza errore in caselle range ]30m  1h]: "+varianzaInCaselle);
-					System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]30m  1h]: "+mediaInCaselle+"\n";
-					s=s+"Varianza errore in caselle range ]30m  1h]: "+varianzaInCaselle+"\n";
+					//System.out.println( "Media errore in caselle range ]30m  1h]: "+mediaInCaselle);
+					//System.out.println( "Varianza errore in caselle range ]30m  1h]: "+varianzaInCaselle);
+					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+					s=s+"Media errore in caselle range ]30m  1h]: "+df.format(mediaInCaselle)+"\n";
+					s=s+"Varianza errore in caselle range ]30m  1h]: "+df.format(varianzaInCaselle)+"\n";
 					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+"\t"+metriLato+"\t"+stringaDeltaTime+"\t"+"]30m  1h]"+"\t"+mediaInCaselle+"\t"+varianzaInCaselle+"\t"+afferenze+"\n"; break;
+					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]30m  1h]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
 				case 11:
-					System.out.println( "Media errore in caselle range ]1h  5h]: "+mediaInCaselle);
-					System.out.println( "Varianza errore in caselle range ]1h  5h]: "+varianzaInCaselle);
-					System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]1h  5h]: "+mediaInCaselle+"\n";
-					s=s+"Varianza errore in caselle range ]1h  5h]: "+varianzaInCaselle+"\n";
+					//System.out.println( "Media errore in caselle range ]1h  5h]: "+mediaInCaselle);
+					//System.out.println( "Varianza errore in caselle range ]1h  5h]: "+varianzaInCaselle);
+					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+					s=s+"Media errore in caselle range ]1h  5h]: "+df.format(mediaInCaselle)+"\n";
+					s=s+"Varianza errore in caselle range ]1h  5h]: "+df.format(varianzaInCaselle)+"\n";
 					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+"\t"+metriLato+"\t"+stringaDeltaTime+"\t"+"]1h  5h]"+"\t"+mediaInCaselle+"\t"+varianzaInCaselle+"\t"+afferenze+"\n"; break;
+					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]1h  5h]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
 				case 12:
-					System.out.println( "Media errore in caselle range ]5h  inf]: "+mediaInCaselle);
-					System.out.println( "Varianza errore in caselle range ]5h  inf]: "+varianzaInCaselle);
-					System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]5h  inf]: "+mediaInCaselle+"\n";
-					s=s+"Varianza errore in caselle range ]5h  inf]: "+varianzaInCaselle+"\n";
+					//System.out.println( "Media errore in caselle range ]5h  inf]: "+mediaInCaselle);
+					//System.out.println( "Varianza errore in caselle range ]5h  inf]: "+varianzaInCaselle);
+					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+					s=s+"Media errore in caselle range ]5h  inf]: "+df.format(mediaInCaselle)+"\n";
+					s=s+"Varianza errore in caselle range ]5h  inf]: "+df.format(varianzaInCaselle)+"\n";
 					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+"\t"+metriLato+"\t"+stringaDeltaTime+"\t"+"]5h  inf]"+"\t"+mediaInCaselle+"\t"+varianzaInCaselle+"\t"+afferenze+"\n"; break;
+					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]5h  inf]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
 				default:
 					//errore
 					System.out.println("(MV 8) errore nel select case");
@@ -802,7 +813,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 		double mediaErroreTemp=(float)sommaDist/(float)vettorePrevisioni_0.size();
 		double varianzaErroreTemp=varianza(vettoreTempErrori,mediaErroreTemp);
-		risPerc+=metriLato+"\t"+stringaDeltaTime+"\t0%\t"+mediaErroreTemp+'\t'+varianzaErroreTemp+'\t'+vettorePrevisioni_0.size()+"\n";
+		risPerc+=metriLato+";"+stringaDeltaTime+";0%;"+df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_0.size()+"\n";
 
 		for(int i=1;i<vettorePrevisioni_25.size();i++){
 			distanza=Math.pow(Math.pow(vettoreDiConfronto_25.get(i).get(0)-vettorePrevisioni_25.get(i).get(0),2)
@@ -813,7 +824,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 		mediaErroreTemp=(float)sommaDist/(float)vettorePrevisioni_25.size();
 		varianzaErroreTemp=varianza(vettoreTempErrori,mediaErroreTemp);
-		risPerc+=metriLato+"\t"+stringaDeltaTime+"\t25%\t"+mediaErroreTemp+'\t'+varianzaErroreTemp+'\t'+vettorePrevisioni_25.size()+"\n";
+		risPerc+=metriLato+";"+stringaDeltaTime+";25%;"+df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_25.size()+"\n";
 
 
 		for(int i=0;i<vettorePrevisioni_50.size();i++){
@@ -825,7 +836,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 		mediaErroreTemp=(float)sommaDist/(float)vettorePrevisioni_50.size();
 		varianzaErroreTemp=varianza(vettoreTempErrori,mediaErroreTemp);
-		risPerc+=metriLato+"\t"+stringaDeltaTime+"\t50%\t"+mediaErroreTemp+'\t'+varianzaErroreTemp+'\t'+vettorePrevisioni_50.size()+"\n";
+		risPerc+=metriLato+";"+stringaDeltaTime+";50%;"+df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_50.size()+"\n";
 
 		for(int i=0;i<vettoreDiConfronto_75.size();i++){
 			distanza=Math.pow(Math.pow(vettoreDiConfronto_75.get(i).get(0)-vettorePrevisioni_75.get(i).get(0),2)
@@ -836,7 +847,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 		mediaErroreTemp=(float)sommaDist/(float)vettoreDiConfronto_75.size();
 		varianzaErroreTemp=varianza(vettoreTempErrori,mediaErroreTemp);
-		risPerc+=metriLato+"\t"+stringaDeltaTime+"\t75%\t"+mediaErroreTemp+'\t'+varianzaErroreTemp+'\t'+vettoreDiConfronto_75.size()+"\n";
+		risPerc+=metriLato+";"+stringaDeltaTime+";75%;"+df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettoreDiConfronto_75.size()+"\n";
 
 		String[] risultato=new String[2];
 		risultato[0]=risTemp;	risultato[1]=risPerc;

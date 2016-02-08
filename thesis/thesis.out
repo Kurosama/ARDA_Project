@@ -1,0 +1,23 @@
+\BOOKMARK [0][]{chapter*.1}{Ringraziamenti}{}% 1
+\BOOKMARK [1][]{section.0.1}{Obiettivi della tesi}{chapter*.1}% 2
+\BOOKMARK [1][]{section.0.2}{Struttura della tesi}{chapter*.1}% 3
+\BOOKMARK [0][]{chapter.1}{Previsioni di traiettorie: Stato dell'arte}{}% 4
+\BOOKMARK [1][]{section.1.1}{Sistemi dipendenti dal contesto}{chapter.1}% 5
+\BOOKMARK [2][-]{subsection.1.1.1}{Definizione di contesto}{section.1.1}% 6
+\BOOKMARK [2][-]{subsection.1.1.2}{Computazione context aware}{section.1.1}% 7
+\BOOKMARK [2][-]{subsection.1.1.3}{Definizione di applicazione dipendente dal contesto}{section.1.1}% 8
+\BOOKMARK [2][-]{subsection.1.1.4}{Esempi di applicazioni context aware}{section.1.1}% 9
+\BOOKMARK [2][-]{subsection.1.1.5}{Rilevazione di contesto}{section.1.1}% 10
+\BOOKMARK [1][]{section.1.2}{Sistemi dipendenti dall'ubicazione}{chapter.1}% 11
+\BOOKMARK [2][-]{subsection.1.2.1}{Definizione di ubicazione}{section.1.2}% 12
+\BOOKMARK [2][-]{subsection.1.2.2}{Identificazione dell'ubicazione}{section.1.2}% 13
+\BOOKMARK [1][]{section.1.3}{Previsioni delle destinazioni}{chapter.1}% 14
+\BOOKMARK [2][-]{subsection.1.3.1}{Preliminari: lo storico dei movimenti}{section.1.3}% 15
+\BOOKMARK [2][-]{subsection.1.3.2}{Approcci non dipendenti del dominio}{section.1.3}% 16
+\BOOKMARK [2][-]{subsection.1.3.3}{Approcci dipendenti dal dominio}{section.1.3}% 17
+\BOOKMARK [0][]{chapter.2}{Sviluppo}{}% 18
+\BOOKMARK [1][]{section.2.1}{Java e Python}{chapter.2}% 19
+\BOOKMARK [2][-]{subsection.2.1.1}{Valorizzazione}{section.2.1}% 20
+\BOOKMARK [1][]{section.2.2}{Altro}{chapter.2}% 21
+\BOOKMARK [2][-]{subsection.2.2.1}{Testo}{section.2.2}% 22
+\BOOKMARK [0][]{chapter.3}{Capitolo 3}{}% 23

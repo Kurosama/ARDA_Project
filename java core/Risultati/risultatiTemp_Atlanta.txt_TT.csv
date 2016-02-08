@@ -1,78 +1,78 @@
-TT	50	5 minuti	[0s  1s]	NaN	NaN	0
-TT	50	5 minuti	[1s  5s]	NaN	NaN	0
-TT	50	5 minuti	]5s  10s]	NaN	NaN	0
-TT	50	5 minuti	]10s  15s]	NaN	NaN	0
-TT	50	5 minuti	]15s  30s]	NaN	NaN	0
-TT	50	5 minuti	]30s  1m]	NaN	NaN	0
-TT	50	5 minuti	]1m  5m]	110.53845977783203	12197.5107421875	13
-TT	50	5 minuti	]5m  10m]	114.22222137451172	13040.572265625	9
-TT	50	5 minuti	]10m  15m]	415.5	172626.09375	6
-TT	50	5 minuti	]15m  30m]	418.79998779296875	175303.390625	20
-TT	50	5 minuti	]30m  1h]	421.5	177588.09375	4
-TT	50	5 minuti	]1h  5h]	NaN	NaN	0
-TT	50	5 minuti	]5h  inf]	NaN	NaN	0
-TT	50	10 minuti	[0s  1s]	NaN	NaN	0
-TT	50	10 minuti	[1s  5s]	NaN	NaN	0
-TT	50	10 minuti	]5s  10s]	NaN	NaN	0
-TT	50	10 minuti	]10s  15s]	NaN	NaN	0
-TT	50	10 minuti	]15s  30s]	NaN	NaN	0
-TT	50	10 minuti	]30s  1m]	NaN	NaN	0
-TT	50	10 minuti	]1m  5m]	110.53845977783203	12197.5107421875	13
-TT	50	10 minuti	]5m  10m]	114.22222137451172	13040.572265625	9
-TT	50	10 minuti	]10m  15m]	470.3999938964844	221229.875	5
-TT	50	10 minuti	]15m  30m]	497.3333435058594	247130.46875	15
-TT	50	10 minuti	]30m  1h]	389.75	151858.21875	4
-TT	50	10 minuti	]1h  5h]	288.0	82912.234375	2
-TT	50	10 minuti	]5h  inf]	NaN	NaN	0
-TT	100	5 minuti	[0s  1s]	NaN	NaN	0
-TT	100	5 minuti	[1s  5s]	NaN	NaN	0
-TT	100	5 minuti	]5s  10s]	NaN	NaN	0
-TT	100	5 minuti	]10s  15s]	NaN	NaN	0
-TT	100	5 minuti	]15s  30s]	NaN	NaN	0
-TT	100	5 minuti	]30s  1m]	NaN	NaN	0
-TT	100	5 minuti	]1m  5m]	60.38461685180664	3639.737548828125	13
-TT	100	5 minuti	]5m  10m]	62.77777862548828	3937.808349609375	9
-TT	100	5 minuti	]10m  15m]	225.0	50616.92578125	6
-TT	100	5 minuti	]15m  30m]	212.10000610351562	44965.265625	20
-TT	100	5 minuti	]30m  1h]	179.5	32202.83203125	4
-TT	100	5 minuti	]1h  5h]	NaN	NaN	0
-TT	100	5 minuti	]5h  inf]	NaN	NaN	0
-TT	100	10 minuti	[0s  1s]	NaN	NaN	0
-TT	100	10 minuti	[1s  5s]	NaN	NaN	0
-TT	100	10 minuti	]5s  10s]	NaN	NaN	0
-TT	100	10 minuti	]10s  15s]	NaN	NaN	0
-TT	100	10 minuti	]15s  30s]	NaN	NaN	0
-TT	100	10 minuti	]30s  1m]	NaN	NaN	0
-TT	100	10 minuti	]1m  5m]	60.38461685180664	3639.737548828125	13
-TT	100	10 minuti	]5m  10m]	62.77777862548828	3937.808349609375	9
-TT	100	10 minuti	]10m  15m]	256.20001220703125	65619.6484375	5
-TT	100	10 minuti	]15m  30m]	250.93333435058594	62916.921875	15
-TT	100	10 minuti	]30m  1h]	164.75	27129.619140625	4
-TT	100	10 minuti	]1h  5h]	170.0	28888.314453125	2
-TT	100	10 minuti	]5h  inf]	NaN	NaN	0
-TT	300	5 minuti	[0s  1s]	NaN	NaN	0
-TT	300	5 minuti	[1s  5s]	NaN	NaN	0
-TT	300	5 minuti	]5s  10s]	NaN	NaN	0
-TT	300	5 minuti	]10s  15s]	NaN	NaN	0
-TT	300	5 minuti	]15s  30s]	NaN	NaN	0
-TT	300	5 minuti	]30s  1m]	NaN	NaN	0
-TT	300	5 minuti	]1m  5m]	25.0	623.6730346679688	13
-TT	300	5 minuti	]5m  10m]	21.22222137451172	450.0035095214844	9
-TT	300	5 minuti	]10m  15m]	71.33333587646484	5088.083984375	6
-TT	300	5 minuti	]15m  30m]	66.3499984741211	4402.51171875	20
-TT	300	5 minuti	]30m  1h]	58.75	3449.626708984375	4
-TT	300	5 minuti	]1h  5h]	NaN	NaN	0
-TT	300	5 minuti	]5h  inf]	NaN	NaN	0
-TT	300	10 minuti	[0s  1s]	NaN	NaN	0
-TT	300	10 minuti	[1s  5s]	NaN	NaN	0
-TT	300	10 minuti	]5s  10s]	NaN	NaN	0
-TT	300	10 minuti	]10s  15s]	NaN	NaN	0
-TT	300	10 minuti	]15s  30s]	NaN	NaN	0
-TT	300	10 minuti	]30s  1m]	NaN	NaN	0
-TT	300	10 minuti	]1m  5m]	25.0	623.6730346679688	13
-TT	300	10 minuti	]5m  10m]	21.22222137451172	450.0035095214844	9
-TT	300	10 minuti	]10m  15m]	81.4000015258789	6624.48779296875	5
-TT	300	10 minuti	]15m  30m]	78.06666564941406	6092.0068359375	15
-TT	300	10 minuti	]30m  1h]	54.0	2914.533203125	4
-TT	300	10 minuti	]1h  5h]	56.5	3190.93017578125	2
-TT	300	10 minuti	]5h  inf]	NaN	NaN	0
+TT;50;5 minuti;[0s  1s];?;?;0
+TT;50;5 minuti;[1s  5s];?;?;0
+TT;50;5 minuti;]5s  10s];?;?;0
+TT;50;5 minuti;]10s  15s];?;?;0
+TT;50;5 minuti;]15s  30s];?;?;0
+TT;50;5 minuti;]30s  1m];?;?;0
+TT;50;5 minuti;]1m  5m];110,5384;12.197,5107;13
+TT;50;5 minuti;]5m  10m];114,2222;13.040,5722;9
+TT;50;5 minuti;]10m  15m];415,50;172.626,0937;6
+TT;50;5 minuti;]15m  30m];418,7999;175.303,3906;20
+TT;50;5 minuti;]30m  1h];421,50;177.588,0937;4
+TT;50;5 minuti;]1h  5h];?;?;0
+TT;50;5 minuti;]5h  inf];?;?;0
+TT;50;10 minuti;[0s  1s];?;?;0
+TT;50;10 minuti;[1s  5s];?;?;0
+TT;50;10 minuti;]5s  10s];?;?;0
+TT;50;10 minuti;]10s  15s];?;?;0
+TT;50;10 minuti;]15s  30s];?;?;0
+TT;50;10 minuti;]30s  1m];?;?;0
+TT;50;10 minuti;]1m  5m];110,5384;12.197,5107;13
+TT;50;10 minuti;]5m  10m];114,2222;13.040,5722;9
+TT;50;10 minuti;]10m  15m];470,3999;221.229,875;5
+TT;50;10 minuti;]15m  30m];497,3333;247.130,4687;15
+TT;50;10 minuti;]30m  1h];389,75;151.858,2187;4
+TT;50;10 minuti;]1h  5h];288,00;82.912,2343;2
+TT;50;10 minuti;]5h  inf];?;?;0
+TT;100;5 minuti;[0s  1s];?;?;0
+TT;100;5 minuti;[1s  5s];?;?;0
+TT;100;5 minuti;]5s  10s];?;?;0
+TT;100;5 minuti;]10s  15s];?;?;0
+TT;100;5 minuti;]15s  30s];?;?;0
+TT;100;5 minuti;]30s  1m];?;?;0
+TT;100;5 minuti;]1m  5m];60,3846;3.639,7375;13
+TT;100;5 minuti;]5m  10m];62,7777;3.937,8083;9
+TT;100;5 minuti;]10m  15m];225,00;50.616,9257;6
+TT;100;5 minuti;]15m  30m];212,10;44.965,2656;20
+TT;100;5 minuti;]30m  1h];179,50;32.202,832;4
+TT;100;5 minuti;]1h  5h];?;?;0
+TT;100;5 minuti;]5h  inf];?;?;0
+TT;100;10 minuti;[0s  1s];?;?;0
+TT;100;10 minuti;[1s  5s];?;?;0
+TT;100;10 minuti;]5s  10s];?;?;0
+TT;100;10 minuti;]10s  15s];?;?;0
+TT;100;10 minuti;]15s  30s];?;?;0
+TT;100;10 minuti;]30s  1m];?;?;0
+TT;100;10 minuti;]1m  5m];60,3846;3.639,7375;13
+TT;100;10 minuti;]5m  10m];62,7777;3.937,8083;9
+TT;100;10 minuti;]10m  15m];256,20;65.619,6484;5
+TT;100;10 minuti;]15m  30m];250,9333;62.916,9218;15
+TT;100;10 minuti;]30m  1h];164,75;27.129,6191;4
+TT;100;10 minuti;]1h  5h];170,00;28.888,3144;2
+TT;100;10 minuti;]5h  inf];?;?;0
+TT;300;5 minuti;[0s  1s];?;?;0
+TT;300;5 minuti;[1s  5s];?;?;0
+TT;300;5 minuti;]5s  10s];?;?;0
+TT;300;5 minuti;]10s  15s];?;?;0
+TT;300;5 minuti;]15s  30s];?;?;0
+TT;300;5 minuti;]30s  1m];?;?;0
+TT;300;5 minuti;]1m  5m];25,00;623,673;13
+TT;300;5 minuti;]5m  10m];21,2222;450,0035;9
+TT;300;5 minuti;]10m  15m];71,3333;5.088,0839;6
+TT;300;5 minuti;]15m  30m];66,3499;4.402,5117;20
+TT;300;5 minuti;]30m  1h];58,75;3.449,6267;4
+TT;300;5 minuti;]1h  5h];?;?;0
+TT;300;5 minuti;]5h  inf];?;?;0
+TT;300;10 minuti;[0s  1s];?;?;0
+TT;300;10 minuti;[1s  5s];?;?;0
+TT;300;10 minuti;]5s  10s];?;?;0
+TT;300;10 minuti;]10s  15s];?;?;0
+TT;300;10 minuti;]15s  30s];?;?;0
+TT;300;10 minuti;]30s  1m];?;?;0
+TT;300;10 minuti;]1m  5m];25,00;623,673;13
+TT;300;10 minuti;]5m  10m];21,2222;450,0035;9
+TT;300;10 minuti;]10m  15m];81,40;6.624,4877;5
+TT;300;10 minuti;]15m  30m];78,0666;6.092,0068;15
+TT;300;10 minuti;]30m  1h];54,00;2.914,5332;4
+TT;300;10 minuti;]1h  5h];56,50;3.190,9301;2
+TT;300;10 minuti;]5h  inf];?;?;0
