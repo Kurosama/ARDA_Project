@@ -1,12 +1,50 @@
 \chapter{Conversione e sviluppo}
 
-\section{Differenze implementative}
-
 \section{Analisi e scelte implementative}
+\subsection{Conversione}
+- Python molto libero nella definizione di variabili e funzione (creazione e richiamo)\\
+- Java molto rigido nella definizione\\
+- Gestione dei dati simile ma differente\\
+
 \subsection{Unificazione dei valori di default}
-\subsection{Scelte implementative}
-\subsection{Raggruppamento delle funzioni}
+- Prima erano 2-3 versione dei dati (conv metri lat-long)\\
+- Unificazione delle procedure di test sia con Mimp che SR\\
+
+
+%----------------------------
+\subsection{Modifiche fatte}
+Durante lo sviluppo dell'applicativo si sono voluti apportare dei cambiamenti
+a livello di calcolo.
+\subsubsection{Calcolo distanza tra 2 punti}
+Nella versione precedente, per calcolare le distanze tra due punti successivi,
+ottenuti dalle rilevazioni, veniva usato il calcolo tra 2 punti. Nel nostro caso
+non possiamo considerare i nostri spostamenti su un piano ma spostamenti su una
+superficie sferica. Per questo si è preferito sostituire
+\begin{equation}
+d =    \dots
+\end{equation}
+con il calcolo della distanza in una superficie sferica
+\begin{equation}
+d =
+\end{equation}
+Questa variazione rende il distanza calcolata più visina alla realta, sopratutto
+quando la distanza tra due punti aumenta.\\
+Nei casi presi in esame non porta a miglioramenti significati ma si e preferito
+introdurla per avere una base di sviluppo piu accurata.
+%----------------------------------------
+
+\subsubsection{Metodo del calcolo dell'autovettore}
+
+
+\subsubsection{calcolo della matrice delle addiacenze}
+ (con Sobel)
 
 \section{Interfaccia Java}
+- descrizione dell'interfaccia con varie immagini (da decidere se mettere in appendice)\\
 \subsection{Visualizzazione plot matrici}
+- Mostrare graficamente le matrici di importanza (verificare il plot 2d e 3d)\\
+- Mostrare graficamente i risultati ottenuti (gestire diversamente la selezione dei parametri)\\
+!! Controllare che le API Google funzionino ancora oppure vedere per OpenStreetView\\
 \subsection{Esportazione risultati}
+- Breve spiegazione del perche scegliere i file CSV\\
+!! Verificare la possibilita di generare file con grafici in xls o xml\\

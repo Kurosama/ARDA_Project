@@ -19,7 +19,7 @@ public class Array{
 			}
 			arr.add(riga);
 		}
-		
+
 
 		for(int i=0;i<n;i++){
 			for(int j=0;j<m;j++){
@@ -29,22 +29,22 @@ public class Array{
 					prova.add(k);
 					arr.get(i).get(j).add(k);
 				}
-				System.out.println(i+"+"+j+" "+"->"+prova.size()+" "+prova);
+				//System.out.println(i+"+"+j+" "+"->"+prova.size()+" "+prova);
 			}
-			System.out.println();
+			//System.out.println();
 		}
 
-		System.out.println("\n array di prova\n");
+		//System.out.println("\n array di prova\n");
 
-		System.out.println("\n arr -> "+arr.size()+"\n");
-		System.out.println("\n arr.get() -> "+arr.get(0).size()+"\n");
-		System.out.println("\n arr.get().get() -> "+arr.get(2).get(4).size()+"\n");
+		//System.out.println("\n arr -> "+arr.size()+"\n");
+		//System.out.println("\n arr.get() -> "+arr.get(0).size()+"\n");
+		//System.out.println("\n arr.get().get() -> "+arr.get(2).get(4).size()+"\n");
 
 		ArrayList<String> elem1 = new ArrayList<String> ();
 		elem1.add("1");
-		System.out.println("\n arr -> "+elem1);
+		//System.out.println("\n arr -> "+elem1);
 		elem1.clear();
-		System.out.println("\n arr -> "+elem1);
+		//System.out.println("\n arr -> "+elem1);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy|HH:mm:ss");
 		String s1 = "10/12/2001|10:25:36";
@@ -55,7 +55,7 @@ public class Array{
 		GregorianCalendar c2 = new GregorianCalendar();
 		GregorianCalendar c3 = new GregorianCalendar();
 		GregorianCalendar ct = new GregorianCalendar();
-		
+
 		try{
 			c1.setTime(sdf.parse(s1));
 			c2.setTime(sdf.parse(s2));
@@ -67,8 +67,10 @@ public class Array{
 
 		c3.setTimeInMillis(c1.getTimeInMillis()+((c2.getTimeInMillis()-c1.getTimeInMillis())/4));
 		String s3=sdf.format(c3.getTime());
-		System.out.println(s3);
 
+		//System.out.println(s3);
+
+		/*
 		if(c3.getTimeInMillis()<ct.getTimeInMillis())
 			System.out.println(s3+" < "+st);
 		else
@@ -76,6 +78,7 @@ public class Array{
 
 		double diff=c2.getTimeInMillis()-c1.getTimeInMillis();
 		System.out.println(diff/1000);
+		*/
 
 		ArrayList<ArrayList<Double>> d1= new ArrayList<ArrayList<Double>>();
 		ArrayList<ArrayList<Double>> d2= new ArrayList<ArrayList<Double>>();
@@ -88,7 +91,7 @@ public class Array{
 		d2.add(previsione);
 		d2.add(previsione);
 		System.out.println(d2+" - "+d1);
-		
+
 		/*
 		ArrayList<String> elem1 = new ArrayList<String> ();
 		elem1.add("1");
@@ -102,9 +105,8 @@ public class Array{
 		ArrayList<ArrayList<String>> arr = new ArrayList<ArrayList<String>> ();
 		arr.add (elem1);
 		arr.add (elem2);
-	
+
 		System.out.println("Prova \n"+arr.get(0));
 		*/
 	}
 }
-

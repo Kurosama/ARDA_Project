@@ -54,7 +54,7 @@ public class ARDA_algorithm {
     		return grid[x_loc][y_loc];
     	}
     	else{
-    		System.out.println("----> Errore: Coordinate matrice di accelerazione fuori range");
+    		//System.out.println("----> Errore: Coordinate matrice di accelerazione fuori range");
     		pos[0]=0; pos[1]=0;
     		return pos;
     	}
@@ -68,7 +68,7 @@ public class ARDA_algorithm {
     		return grid[x_loc][y_loc];
     	}
     	else{
-    		System.out.println("----> Errore: Coordinate matrice di frenata fuori range");
+    		//System.out.println("----> Errore: Coordinate matrice di frenata fuori range");
     		return 0;
     	}
     }
@@ -150,7 +150,7 @@ public class ARDA_algorithm {
 
 	}//predict_next_for
 
-    
+
     public double[][] predict_next_for(double[][] TriplaUltimaPrevisione, double[][] TriplaPenultimaPrevisione,double [][][] acc_info,double[][] brake_info,int[] grid_info, double after_time, double brake_max){
 
 		double[] points_prob_dist_array=new double[81];

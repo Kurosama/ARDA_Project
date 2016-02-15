@@ -50,12 +50,12 @@ public class CalcoloMacc{
     private double costanteMoltiplicativa;
 
     public CalcoloMacc(String PATH, int metrilato,String indice){
-        System.out.println(" -> (CM 1) Inizio del calcolare la matrice di importanza");
+        //System.out.println(" -> (CM 1) Inizio del calcolare la matrice di importanza");
 		ind_loc= new CalcolaIndiciLocalita(PATH,metrilato,indice);
 		n=ind_loc.get_n();
 		m=ind_loc.get_m();
 		maxVisite=ind_loc.get_maxVisite();
-		System.out.println(" -> (CM 1) Termine del calcolare la matrice di importanza");
+		//System.out.println(" -> (CM 1) Termine del calcolare la matrice di importanza");
 
    	 	Mimp=new double[n][m];
    	 	Mimp=ind_loc.get_Mimp();
@@ -74,8 +74,8 @@ public class CalcoloMacc{
 
     //Questo metodo lo utilizzo quando non devo calcolo
     public CalcoloMacc(String PATH, int metrilato, double [][] Mpot,int n,int m,double Xmax,double Ymax,double Xmin,double Ymin ,double GradiLatoX, double GradiLatoY, int maxVisite){
-        System.out.println("-> (CM 2) Inizio del calcolare la matrice di importanza");
-        System.out.println("-> (CM 2) Inizio calcolo Macc "+maxVisite);
+        //System.out.println("-> (CM 2) Inizio del calcolare la matrice di importanza");
+        //System.out.println("-> (CM 2) Inizio calcolo Macc "+maxVisite);
 		this.maxVisite=maxVisite;
 		this.Mpot=Mpot;
 		double[][] Mimp=new double[n][m];
@@ -91,7 +91,7 @@ public class CalcoloMacc{
 		this.Ymin=Ymin;
 		this.GradiLatoX=GradiLatoX;
 		this.GradiLatoY=GradiLatoY;
-		System.out.println(" -> (2) Termine del calcolare la matrice di importanza");
+		//System.out.println(" -> (2) Termine del calcolare la matrice di importanza");
 
     	retMacc(PATH,metrilato);
     }
@@ -99,8 +99,8 @@ public class CalcoloMacc{
     public void retMacc(String PATH, int metrilato){
 
     	//Uso li stessi valori per il calcolo delle dimensioni delle zone
-        System.out.println("\n\n############################################# Inizio calcolo Macc ################################################\n");
-        System.out.println(" valori -> n "+n+" m "+m+" maxVisite "+maxVisite+"\n");
+        //System.out.println("\n\n############################################# Inizio calcolo Macc ################################################\n");
+        //System.out.println(" valori -> n "+n+" m "+m+" maxVisite "+maxVisite+"\n");
 
 		for(int i=0;i<n;i++){
 			ArrayList<ArrayList<Double>> riga = new ArrayList<ArrayList<Double>>();
@@ -237,9 +237,9 @@ public class CalcoloMacc{
 		double costanteMoltiplicativa=(float)valoreMediaAccelerazioneReale/(float)valoremediaAccelerazioni;
 
 		//Visualizzazione dati calcolati
-		System.out.println("Valore medio accelerazione reale= "+valoreMediaAccelerazioneReale);
-		System.out.println(" Valore medio accelerazione Macc= "+valoremediaAccelerazioni);
-		System.out.println("  Valore Costante moltiplicativa= "+costanteMoltiplicativa);
+		//System.out.println("Valore medio accelerazione reale= "+valoreMediaAccelerazioneReale);
+		//System.out.println(" Valore medio accelerazione Macc= "+valoremediaAccelerazioni);
+		//System.out.println("  Valore Costante moltiplicativa= "+costanteMoltiplicativa);
 
 		//Ricalcolo della matrice di accelerazione con la costante moltiplicativa
 		for(int i=0;i<n;i++){
@@ -248,7 +248,7 @@ public class CalcoloMacc{
 				Macc[i][j][1]=Macc[i][j][1]*costanteMoltiplicativa;
 			}
 		}
-		System.out.println("\n############################################# Finito di calcolare Macc ################################################");
+		//System.out.println("\n############################################# Finito di calcolare Macc ################################################");
 
     }//retMpot
 
