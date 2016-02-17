@@ -49,3 +49,12 @@ Comandi
 
 javac ..\*.java -d "C:\Users\Alessio\Documents\Personali\Progetti\ARDA_Project\java core\class"
 java Main
+
+
+Note latex
+ì \grave{i}
+è \grave{e}
+é \acute{e}
+ò \grave{o}
+à \grave{a}
+ù \grave{u}
