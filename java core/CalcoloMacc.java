@@ -298,7 +298,7 @@ public class CalcoloMacc{
 		return ris;
 	}
 
-	private double[][][] gradiente (double [][] Mimp){
+	private double[][][] gradiente(double [][] Mimp){
 		double[][][] ris=new double [n][m][2];
 		//calcolo Gy
 		for(int i=0;i<n;i++){

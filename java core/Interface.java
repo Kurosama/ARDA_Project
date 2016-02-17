@@ -4,6 +4,7 @@ import javax.swing.*;    // Using Swing components and containers
 import javax.swing.border.*;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
+import javax.swing.filechooser.*;
 
 // A Swing GUI application inherits the top-level container javax.swing.JFrame
 public class Interface extends JFrame {

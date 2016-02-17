@@ -1,50 +1,110 @@
 \chapter{Conversione e sviluppo}
 
 \section{Analisi e scelte implementative}
+Java e Python sono due linguaggi di programmazione simili ma diversi tra loro nati e progettati per necessita differenti.\
+Nato agli inizzi degli anni '90, e uno dei linguaggi di programmazione piu conoscuti ed apprezzati
+negli decennio passato. Ha avuto un notevole successo grazie all'esposione di internet e la possibilita
+di creare applicazione client-server indipendenti dalla piattaforma. Simile al C++ come sintassi di base
+ma senza alcune sue caratteristiche che potevano creare delle criticita a livello di progettazione
+(come l'aritmetica dei puntatori, ecc)\cite{new_2}, mentre le caratteristiche object oriented sia
+a C++ ma soprattutto all'Objective C.\\
+Il codice Java deve essere prima compilato per ottenere in cosidetto \textit{bytecode} che poi verra
+eseguito attraverso una fase di interpretazione ad opera della Java Virtual Machine. Proprio questo procedimento
+riesce a slegare i programmi dall'ambiente di compilazione ed esecuzione (da cui il motto \textit{Write once, Run everywhere}). \\
+\\
+Python, nato sempre agli inizzi degli anni '90, e un un linguaggio multi-paradigma, che fa della dinamicita,
+semplicita e flessibilita i suoi principali obiettivi. Supporta la programmazione Object oriented e molte
+caratteristiche di programmazione funzionale e riflessione. Una sua caratteristita che lo contradistingue e la
+non tipizzazione delle variabile e l'esequzione in \textit{runtime}.\\
+
 \subsection{Conversione}
-- Python molto libero nella definizione di variabili e funzione (creazione e richiamo)\\
-- Java molto rigido nella definizione\\
-- Gestione dei dati simile ma differente\\
+Sono proprio le differenze appena descritte che si sono contraddistinte durante la converisione del progetto da Python a Java.
+La struttura piu rigida di Java ha richiesto un'analisi delle variabili, delle funzioni e degli oggetti utilizzare che,
+a volte, ha richiesto una conversione della tipologia delle variabile oppure una divisione per ogni tipologia utilizzata dal programma.\\
+Sebbene questa rigidita ha richiesto un'analisi preventiva del codice, in seguito ha reso lo sviluppo piu agevole in quanto
+il flusso dei dati rimane coerente visto che non puo variare di tipologia.
 
 \subsection{Unificazione dei valori di default}
-- Prima erano 2-3 versione dei dati (conv metri lat-long)\\
-- Unificazione delle procedure di test sia con Mimp che SR\\
+Nel progetto originale si era preferito dividere sia l'esequezione dei test tra il percorso di Udine con quello ad Atlanta,
+sia il calcolo delle matrici di importanza con l'algoritmo SpaceRank dagli altri metodi, questo perche si e preferito
+concentrare lo sviluppo degli algoritmi e dei test per i casi specifici.
+Tale approccio ha portato alla realizzazione di quattro distinte flussi di codice simili tra loro ma con variabili e funzioni
+indipendenti e non riutilizzabili tra loro.\\
+Durante l'analisi iniziale, necessaria per definire funzioni e variabili, si e preferito unificare le procedure simili cosi da
+semplificare e diminuri i codice necessario per il programma. Anche le strutture dati sono risultate simili e e optato per
+unificare la gestione del calcolo della matrice di importanza.\\
 
-
-%----------------------------
 \subsection{Modifiche fatte}
 Durante lo sviluppo dell'applicativo si sono voluti apportare dei cambiamenti
 a livello di calcolo.
-\subsubsection{Calcolo distanza tra 2 punti}
+\subsubsection{Calcolo della distanza}
 Nella versione precedente, per calcolare le distanze tra due punti successivi,
 ottenuti dalle rilevazioni, veniva usato il calcolo tra 2 punti. Nel nostro caso
 non possiamo considerare i nostri spostamenti su un piano ma spostamenti su una
 superficie sferica. Per questo si è preferito sostituire
 \begin{equation}
-d =    \dots
+d =  \sqrt{(x_{1}-x_{2})^2 + (y_{1}-y_{2})^2}
 \end{equation}
 con il calcolo della distanza in una superficie sferica
 \begin{equation}
-d =
+d = r_{earth} * \arccos{( (\sin{lat_{1}} * \sin{lat_{2}}) + (\cos{lat_{1}} * \cos{lat_{2}} * \cos{(lat_{1} - lat_{2})} ) )}
 \end{equation}
-Questa variazione rende il distanza calcolata più visina alla realta, sopratutto
-quando la distanza tra due punti aumenta.\\
-Nei casi presi in esame non porta a miglioramenti significati ma si e preferito
-introdurla per avere una base di sviluppo piu accurata.
-%----------------------------------------
+Questa variazione rende il distanza calcolata piu vicina alla realta, sopratutto
+quando i due punti sono molto lontani tra loro, in alcuni casi limite, puo ancora non essere precisa.\\
+Negli spostamente presi in esame questo cambiamento porta un miglioramento marginale ma si e preferito
+introdurla sopratutto per avere una base di sviluppo piu accurata.
 
-\subsubsection{Metodo del calcolo dell'autovettore}
-
-
-\subsubsection{calcolo della matrice delle addiacenze}
- (con Sobel)
+\subsubsection{Calcolo della matrice accelerazione}
+Nel calcolo delle matrici ARDA, per ottenere la matrice delle accellerazione $M_{acc}$ si esegue, sulla
+matrice $M_{imp}$, una funzione gradiente per calcolare i valori del vettore in tutte le zone. Come si puo
+vedere nei FIGURA xy, la matrice generata ha ottimi risultati con punti di importanza distanti tra loro
+ma con punti vicini il calcolo del vettore ha qualche incongruenza nelle zone adiacenti.\\
+Utilizzando l'algoritmo di Sobel, questo distribuisce con maggior equita le forze anche in presenze di
+molti punti di interessi vicii tra loro.\\
+Sia nel precedente progetto che in questo, la matrice di accellerazione viene calcolata dopo un solo processo
+della matrice $M_{imp}$ calcolando le forze solo nelle zone addiacenti a quelle con dei valori di interesse.
+Pensando proprio all'idea su cui si basa l'utilizzo delle matrici di accellerazione si puo capire quanto possa
+essere limitativo eseguire questo calcolo solo in queste zone. Questo puo portare ad un'eventuale sviluppo e
+confronto con il calcolo della matrice di accellerazione con piu iterazione sulla matrice risultante
+\begin{equation}
+M_{acc} = G^{n}(M_{imp})
+\end{equation}
 
 \section{Interfaccia Java}
-- descrizione dell'interfaccia con varie immagini (da decidere se mettere in appendice)\\
+Altro punto della progetto e creare un'interfaccia user-friend per poter eseguire i setup e visualizzare
+i risultati in modo semplice e veloce. Nel progetto precedente bisognava eseguire i setup dei file,
+directory e impostazioni direttamente nei vari file del codice.\\
+\\
+FIGURA xy\\
+\\
+Adesso l'utente ha la possibilità di impostare:
+\begin{enumerate}
+    \item i file mediante una semplice selezione tramite un finder navigando nel filesytem
+    \item selezionare le dimensione delle celle e gli indici utilizzati per il calcolo
+    \item visualizzare un plot della matrice di importanza.
+\end{enumerate}
+Per l'esecuzione dei test si e scelto di dividere il calcolo dal salvataggio dei risultati mediante i file CSV
+gia implementati nella versione precedente, con la possibilita di visualizzare solamente il dato preso in esame.
+Proprio per rendere facilemente usufruibile la funzione di visualizzazione dei dati, la sezione dei grafici e
+divisa in varie schede (come si puo vedere dall'immagine) generate in base alle opzioni selezionate.
+
 \subsection{Visualizzazione plot matrici}
-- Mostrare graficamente le matrici di importanza (verificare il plot 2d e 3d)\\
-- Mostrare graficamente i risultati ottenuti (gestire diversamente la selezione dei parametri)\\
-!! Controllare che le API Google funzionino ancora oppure vedere per OpenStreetView\\
-\subsection{Esportazione risultati}
-- Breve spiegazione del perche scegliere i file CSV\\
-!! Verificare la possibilita di generare file con grafici in xls o xml\\
+Questa funzionalita ha pero tolto la possibilita di selezione multipla della grandezza delle zone di importanza
+e impostato un limite di 2 possibile tipi di indice.
+\\
+FIGURA XY\\
+\\
+Infatti la visualizzazione e la gestione delle schede sarebbe stata troppo dispersiva visti la possibilita di
+generare 25 casi separati con almeno 7 grafici differenti per ognuno di essi ed un totale di 175 schede massime.
+Con le limitazioni imposte si arriva a un massimo di 14 schede divise in 2 righe, sufficenti per avere subito
+a dei grafici e poter fare un confronto veloce tra 2 tipi di indice differente.\\
+\\
+FIGURA XY\\
+\\
+Questa piccola variazione pero non influenza la generazione dei file CSV con i risultati. Essi non vengono cancellati
+e, con il lancio di tutte le procedure mediante l'interfaccia, possono essere facilmente reperibili per effettuare
+analisi direttamente dai dati che normalmente si visualizzano nei grafici.
+
+\subsubsection{Tempistice di esecuzione}
+- Differenze tra Java e Python (semplice benchmark)
+!! Differenze tra dispositivi (PC vs RaspberryPi)

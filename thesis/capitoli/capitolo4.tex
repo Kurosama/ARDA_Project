@@ -1,10 +1,29 @@
-\chapter{Comparative e valutazioni}
+\chapter{Concluzioni}
+In questa tesi si e voluto principamente confrontare lo sviluppo dell'algoritmo
+ARDA con 2 linguaggi di programmazione concettualmente diversi tra loro: Java e Python.
+In seguito si e voluto apportare delle migliorimenti:
+\begin{enumerate}
+    \item Si e voluto ri-organizzare il codice per una maggiore fruibilita e leggibilita
+    \item Migliorare il calcolo della distanza tra punti e calcolo della matrice $M_{acc}$
+\end{enumerate}
+Come ultima parte, si e voluto implementare un'interfaccia grafica per poter visualiizare
+i risultati in modo semplice e veloce, senza dimenticare la possibilita di esportare i
+dati in file CSV
 
-\section{Metodo di sviluppo}
-- Riassunto delle scelte fatte
-
-\section{Tempistice di esecuzione}
-- Differenze tra Java e Python (semplice benchmark)
-!! Differenze tra dispositivi (PC vs RaspberryPi)
+\section{Considerazioni}
+La conversione del codice da Python a Java, dopo l'attenta analisi del codice e di tutte
+le sue funzionalita e varianti, e stata abbastanza immedita, non trovando procedure o
+funzioni differenti tra i due linguaggi.\\
+Invece lo sviluppo dell'interfaccia grafica ha richiesto molta piu attenzione.
+Java non da nativamente le possibilita di sviluppare interfacce tramite dei tool esperni
+senza generare codice pesante e alle volte molto complesso a fronte delle semplicita dell'interfaccia.
+Lo stesso sistema di gestione dei componenti e della loro dimensione e posione non e
+intuitivo. Confrontandolo con linguaggi simili come C++ e lo stesso Python che, mediante
+librerie grafiche specifiche danno la possibilita creare interfacce grafiche, Java ha una
+gestione abbastanza macchinosa per quando riguarda la composizione delle interfacce grafiche.
+Stesso discorso vale per la mancanza di vere e proprie librerie per la gestione dei grafici
+senza doversi appoggiare a libreria esterne a quelle di Java stessa.\\
+Queste mancanze non hanno comportato criticita nello sviluppo del programma ma non hanno
+nemmeno aggevolato lo sviluppo della parte grafica.
 
 \section{Sviluppi futuri}
