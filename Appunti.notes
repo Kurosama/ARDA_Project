@@ -23,8 +23,6 @@ Punti
 
   - implemetazione dell'algoritmo da Python a Java
 
---------------------------------------------------------------------------------------------
-
 Implemetazione
   - SpaceRank , visit , avgTime, totTime, CombLin(visit, totTime)
   - Calcolo matrice S (pag 25-28)
@@ -43,7 +41,7 @@ Note sullo sviluppo
     - Export in csv (con relativa localizzazione dei formati)
 
 
-################################################
+################################################################################################################################################
 
 Comandi
 
@@ -58,3 +56,6 @@ Note latex
 ò \grave{o}
 à \grave{a}
 ù \grave{u}
+
+
+################################################################################################################################################
