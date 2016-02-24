@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.Map;
+import java.util.HashMap;
 
 public class SRmatriciDizionari{
 
@@ -9,6 +11,10 @@ public class SRmatriciDizionari{
 	private double[][] Mpot;
 	private double[][] Mvisite;
 	private double[][][] Macc;
+
+	private String hashkey;
+	private Map<String, Float> DizA;
+	private Map<String, Float> DizSR;
 
 	//Trovo il giusto peso da porre in B[a][b][c][d] per i punti adiacenti (a,b)(c,d)
 	public double PesaB(int a, int b, int n, int m){
@@ -22,6 +28,35 @@ public class SRmatriciDizionari{
 		if(b==(m-1)) return (float)1/(float)6;
 		return (float)1/(float)9;
 	}//PesaB
+
+	public Map IncrHash(Map<String, Float> mapLoc, int a, int b, int c, int d,float value){
+		hashkey = "("+a+","+b+")("+c+","+d+")";
+		if(mapLoc.containsValue(hashkey)){
+			mapLoc.replace(hashkey,mapLoc.get(hashkey)+value);
+		}else{
+			mapLoc.put(hashkey,value);
+		}
+		return mapLoc;
+	}
+
+	public float GetHash(Map<String, Float> mapLoc, int a, int b, int c, int d){
+		hashkey = "("+a+","+b+")("+c+","+d+")";
+		if(mapLoc.containsValue(hashkey)){
+			return mapLoc.get(hashkey);
+		}else{
+			return (float)0;
+		}
+	}
+
+	public Map SetHash(Map<String, Float> mapLoc, int a, int b, int c, int d,float value){
+		hashkey = "("+a+","+b+")("+c+","+d+")";
+		if(mapLoc.containsValue(hashkey)){
+			mapLoc.replace(hashkey,value);
+		}else{
+			mapLoc.put(hashkey,(float)0);
+		}
+		return mapLoc;
+	}
 
 	public SRmatriciDizionari(String PATH, int metrilato, int numeroiterazioniSRtoMimp){
 
@@ -75,12 +110,15 @@ public class SRmatriciDizionari{
 		n=(int)((Xmax-Xmin)/GradiLatoX)+1;  //larghezza matrice
 		m=(int)((Ymax-Ymin)/GradiLatoY)+1;  //altezza   matrice
 
+		System.out.println("N:"+n+" M:"+m);
+
 		int gg2=172800;
 		int min5=300;
 
 		// Definisco i dizionari di A mentre calcolo la somma per righe e li inizializzo a 0
-		double[][][][] DizA=new double[n][m][n][m];
-		double[][][][] DizSR=new double[n][m][n][m];
+		DizA  = new HashMap();
+	   	DizSR = new HashMap();
+
 		double[][] DizA_sommaRighe=new double[n][m];
 		double[][] Mvisite=new double[n][m];
 		double[][] Mimp=new double[n][m];
@@ -90,15 +128,10 @@ public class SRmatriciDizionari{
 			for(int j=0;j<m;j++){
 				DizA_sommaRighe[i][j]=0;
 				Mvisite[i][j]=0;
-				for(int z=0;z<n;z++){
-					for(int w=0;w<m;w++){
-						DizA[i][j][z][w]=0;
-						DizSR[i][j][z][w]=0;
-					}
-				}
 			}
 		}
 
+		System.out.println("Read file");
 		try{
 			FileInputStream fstream = new FileInputStream(PATH);
 			DataInputStream in = new DataInputStream(fstream);
@@ -115,7 +148,6 @@ public class SRmatriciDizionari{
 			int numero=0,y_zona,x_zona;
 
 			while ((strLine = br.readLine()) != null){
-
 				//Estraggo i vari dati dalle righe
 				     y=Double.parseDouble(strLine.substring(0,10));
 				     x=Double.parseDouble(strLine.substring(11,21));
@@ -140,15 +172,15 @@ public class SRmatriciDizionari{
 					numero=1;
 				else{
 					if(diff_in_sec<=min5){
-						DizA[x_zona_prec][y_zona_prec][x_zona][y_zona]+=1;
+						DizA = IncrHash(DizA,x_zona_prec,y_zona_prec,x_zona,y_zona,1);
 						DizA_sommaRighe[x_zona_prec][y_zona_prec]+=1;
 					}
 					else{
 						if(diff_in_sec>min5 && diff_in_sec<gg2){
 							//int permanenza=(int)( diff_in_sec/sec_nuova_entry);
 							int permanenza=(int)((float)(diff_gg+diff_sec)/(float)sec_nuova_entry);
-							DizA[x_zona_prec][y_zona_prec][x_zona][y_zona]+=1;
-							DizA[x_zona][y_zona][x_zona][y_zona]+=(permanenza-1);
+							DizA = IncrHash(DizA,x_zona_prec,y_zona_prec,x_zona,y_zona,1);
+							DizA = IncrHash(DizA,x_zona,y_zona,x_zona,y_zona,(permanenza-1));
 							DizA_sommaRighe[x_zona_prec][y_zona_prec]+=1;
 							DizA_sommaRighe[x_zona][y_zona]+=(permanenza-1);
 						}
@@ -165,16 +197,20 @@ public class SRmatriciDizionari{
 		}catch (Exception e){
 			System.err.println("Errore: " + e.getMessage());
 		}
-
+		System.out.println("End Read file");
 		// normalizzazione di A con moltiplicazione per il futuro merge con B
 		double mergerD=0.15;
 
+		System.out.println("Calculate DizA");
 		for(int i=0;i<n;i++){
 			for(int j=0;j<m;j++){
 				if(DizA_sommaRighe[i][j]!=0){
 					for(int z=0;z<n;z++){
 						for(int w=0;w<m;w++){
-							DizA[i][j][z][w]=((float)DizA[i][j][z][w]/(float)DizA_sommaRighe[i][j])*(1-mergerD);
+							System.out.println("("+i+")("+j+"),("+z+")("+w+")");
+							DizA = SetHash(DizA,i,j,z,w,
+								(GetHash(DizA,i,j,z,w)/(float)DizA_sommaRighe[i][j])*(float)(1-mergerD)
+							);
 						}
 					}
 				}
@@ -187,23 +223,25 @@ public class SRmatriciDizionari{
 		 *	poi a mettere A pesata:
 		 * 	Questa parte è abbastanza lenta [...]
 		 */
+		System.out.println("Calculate DizSR");
 		for(int a=0;a<n;a++){
 			for(int b=0;b<m;b++){
 				for(int c=Math.max(0,(a-1));c<Math.min(n,(a+1));c++){
 					for(int d=Math.max(0,(b-1));d<Math.min(m,(b+1));d++){
-						DizSR[a][b][c][d]=PesaB(a,b,n,m)*mergerD;
+						DizSR = SetHash(DizSR,a,b,c,d,(float)(PesaB(a,b,n,m)*mergerD));
 					}
 				}
 			}
 		}
 
 		// Inserisco la parte relativa alla matrice A normalizzata
+		System.out.println("Normalize DizSR");
 		for(int a=0;a<n;a++){
 			for(int b=0;b<m;b++){
 				if(DizA_sommaRighe[a][b]!=0){
 					for(int c=0;c<n;c++){
 						for(int d=0;d<m;d++){
-							DizSR[a][b][c][d]+=DizA[a][b][c][d];
+							DizSR = IncrHash(DizSR,a,b,c,d,GetHash(DizA,a,b,c,d));
 						}
 					}
 				}
@@ -234,8 +272,8 @@ public class SRmatriciDizionari{
 				for(int b=0;b<m;b++){
 					for(int c=0;c<n;c++){
 						for(int d=0;d<m;d++){
-							if(DizSR[a][b][c][d]!=0){
-								new_pagerank_step[(c*m)+d]+=(DizSR[a][b][c][d]*pagerank_step[(c*m)+d]);
+							if(GetHash(DizSR,a,b,c,d)!=0){
+								new_pagerank_step[(c*m)+d]+=(GetHash(DizSR,a,b,c,d)*pagerank_step[(c*m)+d]);
 							}
 						}
 					}

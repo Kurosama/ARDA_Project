@@ -27,7 +27,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 	SRmatriciDizionari SR_matrici;
 	ARDA_algorithm ARDA;
 
-	int n,m;
+	int n,m,i,j;
 	double[][] Mimp;
 	double[][][] Macc;
 	double[][] Mpot;
@@ -36,203 +36,149 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 	NumberFormat df = DecimalFormat.getInstance();
 
-	public MediaVarianzaAutomaticaPivotFinale(String pathFile,String pathFilePercorsoTest){
-
-		//SETUP parametri test
-		//String pathFile=File+".txt";
-		//String pathFilePercorsoTest="percorso"+pathFile;
+	public MediaVarianzaAutomaticaPivotFinale(String pathFile,String pathFilePercorsoTest,
+											  double[] VettoreDeltaTime0, String[] VettoreDeltaTime1, String[] VettoreIndici,int[] VettorePrecisioneGradi){
 
 		// Setup formato decimali per export csv
 		df.setMinimumFractionDigits(2);
 		df.setMaximumFractionDigits(4);
 		df.setRoundingMode(RoundingMode.DOWN);
 
-		// Faccio dei test parziali solo per velocizzare il processo
-		double[] VettoreDeltaTime0=new double[2];
-		VettoreDeltaTime0[0]=( 1*05*60);	VettoreDeltaTime0[1]=( 1*10*60);
-		/*
-		VettoreDeltaTime0[2]=( 1*15*60);	VettoreDeltaTime0[3]=( 1*20*60);	VettoreDeltaTime0[4]=( 1*30*60);
-		VettoreDeltaTime0[5]=( 1*60*60);	VettoreDeltaTime0[6]=( 2*60*60);
-		VettoreDeltaTime0[7]=( 5*60*60);	VettoreDeltaTime0[8]=(10*60*60);*/
-
-		String[] VettoreDeltaTime1=new String[2];
-		VettoreDeltaTime1[0]="5 minuti";	VettoreDeltaTime1[1]="10 minuti";
-		/*
-		VettoreDeltaTime1[2]="15 minuti";	VettoreDeltaTime1[3]="20 minuti";	VettoreDeltaTime1[4]="30 minuti";
-		VettoreDeltaTime1[5]="1 ora";		VettoreDeltaTime1[6]="2 ore";
-		VettoreDeltaTime1[7]="5 ore";		VettoreDeltaTime1[8]="10 ore";*/
-
-
-		//double VettoreNumIterazSRtoMimp=new double{1,2,10,25,50};
-
-		String[] VettoreIndici=new String[4];
-		VettoreIndici[0]="NV";	// NV - Number of Values
-		VettoreIndici[1]="TT";	// TT - Total Time
-		VettoreIndici[2]="AT";	// AT - Avarage Time
-		VettoreIndici[3]="CL";	// CL - Combination Line NV & TT
-		//VettoreIndici[4]="SR";	// SR - Space Rank
-
-		int[] VettorePrecisioneGradi=new int[3];
-		VettorePrecisioneGradi[0]=50;	VettorePrecisioneGradi[1]=100;	VettorePrecisioneGradi[2]=300;
-		/*VettorePrecisioneGradi[0]=500;	VettorePrecisioneGradi[1]=1000;	VettorePrecisioneGradi[2]=3000;*/
-
 		//##############################################################################################################
 
-		int numTotaleIterazioni=VettoreDeltaTime0.length*VettorePrecisioneGradi.length*VettoreIndici.length;
-		int eseguito=0;
 		String risTemp="";
 		String risPerc="";
+
+		int numeroIterazioni=20;
+
+		int metrilato = 0;
 		//System.out.println("\n\n############################################ INIZIO DEI TEST M.V.A.Pivot Finale  (1) ###############################################");
 
 		// Ciclo Indici
 		for(int i=0;i<VettoreIndici.length;i++){
+
 			risTemp="";
 			risPerc="";
 			String indice=VettoreIndici[i];
+			System.out.println("TEST indice "+indice+" iniziato");
+			if(indice == "SR" ){
+				int[] VettoreNumIterazSRtoMimp=new int[4];	//numero di iterazioni per calcolo autovettore dominante in space rank
+				VettoreNumIterazSRtoMimp[0]=1;	VettoreNumIterazSRtoMimp[1]=10;	VettoreNumIterazSRtoMimp[2]=25;	VettoreNumIterazSRtoMimp[3]=50;
+				for(int w=0;w<VettoreNumIterazSRtoMimp.length;w++){
+					int numeroIterazioniSRtoMimp=VettoreNumIterazSRtoMimp[w];
+					indice = "SR_"+numeroIterazioniSRtoMimp;
 
-			// Ciclo Precisione
-			for(int w=0;w<VettorePrecisioneGradi.length;w++){
-				int metrilato=VettorePrecisioneGradi[w];
+					for(w=0;w<VettorePrecisioneGradi.length;w++){
+						metrilato=VettorePrecisioneGradi[w];
 
-				// Spostato fuori del ciclo j perché verrebbe calcolato j-1 volte di troppo ;)
+						System.out.println("- TEST indice "+indice+" - "+metrilato);
+						SR_matrici=new SRmatriciDizionari(pathFile,metrilato,numeroIterazioni); 		//(2)
 
-				Calc_Macc=new CalcoloMacc(pathFile,metrilato,indice);						//(1)
-				n=Calc_Macc.get_n();			m=Calc_Macc.get_m();
-				Xmin=Calc_Macc.get_Xmin();		Xmax=Calc_Macc.get_Xmax();
-				Ymin=Calc_Macc.get_Ymin();		Ymax=Calc_Macc.get_Ymax();
+						n=SR_matrici.get_n();			m=SR_matrici.get_m();
 
-				//ricavo i dati dai percorsi rilevati
-				Mimp=new double[n][m];		Mimp=Calc_Macc.get_Mimp();
-				Macc=new double[n][m][2];	Macc=Calc_Macc.get_Macc();
-				Mpot=new double[n][m];		Mpot=Calc_Macc.get_Mpot();
+						//ricavo i dati dai percorsi rilevati
+						n=SR_matrici.get_n();
+						m=SR_matrici.get_m();
+						Mimp=new double[n][m];
+						Mimp=SR_matrici.get_Mimp();
+						Macc=new double[n][m][2];
+						Macc=SR_matrici.get_Macc();
 
-				// Ciclo DeltaTime
-				for(int j=0;j<VettoreDeltaTime0.length;j++){
+						//System.out.println("\n\n############################################ INIZIO DEI TEST M.V.A.Pivot Finale (2) ###############################################");
 
-					double deltaTimeMassimo=VettoreDeltaTime0[j];
-					String stringaDeltaTime=VettoreDeltaTime1[j];
-					String[] risultato=new String[2];
 
-					//######################################################################################
+						for(j=0;j<VettoreDeltaTime0.length;j++){
+							double deltaTimeMassimo=VettoreDeltaTime0[j];
+							String stringaDeltaTime=VettoreDeltaTime1[j];
+							String[] risultato=new String[2];
+							System.out.println(" -- TEST indice "+indice+" - "+metrilato+" - "+deltaTimeMassimo);
+							risultato=esecuzioneTest(risTemp,risPerc,pathFilePercorsoTest,pathFile,metrilato,deltaTimeMassimo,indice,stringaDeltaTime);
+							risTemp=risultato[0]; risPerc=risultato[1];
+						}
+					}
+				}
 
-					//System.out.println("\n----------------------------------------------------");
-					//System.out.println("Test nr: "+(i+1)+" -> |"+indice+"|"+metrilato+"|"+(deltaTimeMassimo/60));
+				try{
+					FileOutputStream file = new FileOutputStream("..\\Risultati\\risultatiTempCasuale_"+pathFile+"_SR.csv");
+					PrintStream Output = new PrintStream(file);
+					Output.print(risTemp);
+					file.close();
+				}catch (Exception e){
+					System.err.println(" (MV 3) Errore: " + e.getMessage());
+				}
 
-					risultato=esecuzioneTest(risTemp,risPerc,pathFilePercorsoTest,pathFile,metrilato,deltaTimeMassimo,indice,stringaDeltaTime);
+				try{
+					FileOutputStream file = new FileOutputStream("..\\Risultati\\risultatiPercCasuale_"+pathFile+"_SR.csv");
+					PrintStream Output = new PrintStream(file);
+					Output.print(risPerc);
+					file.close();
+				}catch (Exception e){
+					System.err.println(" (MV 4) Errore: " + e.getMessage());
+				}
 
-					//######################################################################################
+			}else{
+				// Ciclo Precisione
+				for(int w=0;w<VettorePrecisioneGradi.length;w++){
+					metrilato=VettorePrecisioneGradi[w];
 
-					risTemp=risultato[0]; risPerc=risultato[1];
-					eseguito++;
-					//System.out.println("\nEseguito "+eseguito+" di "+numTotaleIterazioni+"\n");
+					// Spostato fuori del ciclo j perché verrebbe calcolato j-1 volte di troppo ;)
 
-					//System.gc();
+					Calc_Macc=new CalcoloMacc(pathFile,metrilato,indice);						//(1)
+					n=Calc_Macc.get_n();			m=Calc_Macc.get_m();
+					Xmin=Calc_Macc.get_Xmin();		Xmax=Calc_Macc.get_Xmax();
+					Ymin=Calc_Macc.get_Ymin();		Ymax=Calc_Macc.get_Ymax();
 
-				} // Ciclo DeltaTime
+					//ricavo i dati dai percorsi rilevati
+					Mimp=new double[n][m];		Mimp=Calc_Macc.get_Mimp();
+					Macc=new double[n][m][2];	Macc=Calc_Macc.get_Macc();
+					Mpot=new double[n][m];		Mpot=Calc_Macc.get_Mpot();
 
-			} // Ciclo
+					// Ciclo DeltaTime
+					for(int j=0;j<VettoreDeltaTime0.length;j++){
 
-			try{
-				FileOutputStream file = new FileOutputStream("..\\Risultati\\risultatiTemp_"+pathFile+"_"+indice+".csv");
-				PrintStream Output = new PrintStream(file);
-				Output.print(risTemp);
-				file.close();
-			}catch (Exception e){
-				System.err.println(" (MV 1) Errore: " + e.getMessage());
-			}
+						double deltaTimeMassimo=VettoreDeltaTime0[j];
+						String stringaDeltaTime=VettoreDeltaTime1[j];
+						String[] risultato=new String[2];
 
-			try{
-				FileOutputStream file = new FileOutputStream("..\\Risultati\\risultatiPerc_"+pathFile+"_"+indice+".csv");
-				PrintStream Output = new PrintStream(file);
-				Output.print(risPerc);
-				file.close();
-			}catch (Exception e){
-				System.err.println(" (MV 2) Errore: " + e.getMessage());
-			}
+						//######################################################################################
 
+						//System.out.println("\n----------------------------------------------------");
+						//System.out.println("Test nr: "+(i+1)+" -> |"+indice+"|"+metrilato+"|"+(deltaTimeMassimo/60));
+
+						risultato=esecuzioneTest(risTemp,risPerc,pathFilePercorsoTest,pathFile,metrilato,deltaTimeMassimo,indice,stringaDeltaTime);
+
+						//######################################################################################
+
+						risTemp=risultato[0]; risPerc=risultato[1];
+
+					} // Ciclo DeltaTime
+				} // Ciclo
+
+				try{
+					FileOutputStream file = new FileOutputStream("..\\Risultati\\risultatiTemp_"+pathFile+"_"+indice+".csv");
+					PrintStream Output = new PrintStream(file);
+					Output.print(risTemp);
+					file.close();
+				}catch (Exception e){
+					System.err.println(" (MV 1) Errore: " + e.getMessage());
+				}
+
+				try{
+					FileOutputStream file = new FileOutputStream("..\\Risultati\\risultatiPerc_"+pathFile+"_"+indice+".csv");
+					PrintStream Output = new PrintStream(file);
+					Output.print(risPerc);
+					file.close();
+				}catch (Exception e){
+					System.err.println(" (MV 2) Errore: " + e.getMessage());
+				}
+			} // Controllo SR
+			System.out.println("TEST indice "+indice+" concluso");
+			System.gc();
 		}// Ciclo Indici
 
 		//System.out.println("\n##########################FINE TEST (1) ##########################\n\n");
 
-	}// MediaVarianzaAutomaticaPivotFinale
-
-	public MediaVarianzaAutomaticaPivotFinale(String File,int metriLato,int numeroIterazioni){
-
-		SR_matrici=new SRmatriciDizionari(File,metriLato,numeroIterazioni); 		//(2)
-
-		n=SR_matrici.get_n();			m=SR_matrici.get_m();
-
-		//ricavo i dati dai percorsi rilevati
-		n=SR_matrici.get_n();
-		m=SR_matrici.get_m();
-		Mimp=new double[n][m];
-		Mimp=SR_matrici.get_Mimp();
-		Macc=new double[n][m][2];
-		Macc=SR_matrici.get_Macc();
-
-		String pathFile=File+".txt";
-		String pathFilePercorsoTest="percorso"+pathFile;
-
-		double[] VettoreDeltaTime0=new double[2];		VettoreDeltaTime0[0]=5*60;				VettoreDeltaTime0[2]=15*60;
-		String[] VettoreDeltaTime1=new String[2];	 	VettoreDeltaTime1[0]="5 minuti";		VettoreDeltaTime1[1]="15 minuti";
-
-
-		int[] VettoreNumIterazSRtoMimp=new int[4];	//numero di iterazioni per calcolo autovettore dominante in space rank
-		VettoreNumIterazSRtoMimp[0]=1;	VettoreNumIterazSRtoMimp[1]=10;	VettoreNumIterazSRtoMimp[2]=25;	VettoreNumIterazSRtoMimp[3]=50;
-
-
-		int[] VettorePrecisioneGradi=new int[3];
-		VettorePrecisioneGradi[0]=50;
-		VettorePrecisioneGradi[1]=100;
-		VettorePrecisioneGradi[2]=500;
-
-		//##############################################################################################################
-
-		int numTotaleIterazioni=VettoreDeltaTime0.length*VettorePrecisioneGradi.length*VettoreNumIterazSRtoMimp.length;
-		int eseguito=0;
-		String risTemp="";
-		String risPerc="";
-
-		//System.out.println("\n\n############################################ INIZIO DEI TEST M.V.A.Pivot Finale (2) ###############################################");
-
-		for(int w=0;w<VettoreNumIterazSRtoMimp.length;w++){
-			int numeroIterazioniSRtoMimp=VettoreNumIterazSRtoMimp[w];
-			String indice=""+numeroIterazioniSRtoMimp;
-			for(int i=0;i<VettorePrecisioneGradi.length;i++){
-				int metrilato1=VettorePrecisioneGradi[i];
-				for(int j=0;j<VettoreDeltaTime0.length;j++){
-					double deltaTimeMassimo=VettoreDeltaTime0[j];
-					String stringaDeltaTime=VettoreDeltaTime1[j];
-					String[] risultato=new String[2];
-					risultato=esecuzioneTest(risTemp,risPerc,pathFilePercorsoTest,pathFile,metrilato1,deltaTimeMassimo,indice,stringaDeltaTime);
-					risTemp=risultato[0]; risPerc=risultato[1];
-					eseguito++;
-					//System.out.println("Eseguito "+eseguito+" di "+numTotaleIterazioni);
-				}
-			}
-		}
-
-		try{
-			FileOutputStream file = new FileOutputStream(pathFile+"-risultatiTempCasuale.csv");
-			PrintStream Output = new PrintStream(file);
-			Output.print(risTemp);
-			file.close();
-		}catch (Exception e){
-			System.err.println(" (MV 3) Errore: " + e.getMessage());
-		}
-
-		try{
-			FileOutputStream file = new FileOutputStream(pathFile+"-risultatiPercCasuale.csv");
-			PrintStream Output = new PrintStream(file);
-			Output.print(risPerc);
-			file.close();
-		}catch (Exception e){
-			System.err.println(" (MV 4) Errore: " + e.getMessage());
-		}
-
-		//System.out.println("\n########################## FINE TEST (2) ##########################\n\n");
-	}
-
+	}// MediaVarianzaAutomaticaPivotFinale_Mimp
 
 	public String[] esecuzioneTest(String risTemp,String risPerc,String pathFilePercorsoTest,String pathFile,int metriLato, double deltaTimeMassimo,String indice,String stringaDeltaTime){
 		double afterTime=1;
@@ -590,11 +536,13 @@ public class MediaVarianzaAutomaticaPivotFinale {
         	double errore_in_caselle=Math.pow(Math.pow(vettoreDiConfronto.get(i).get(0)-vettorePrevisioni.get(i).get(0),2)
         									  +Math.pow(vettoreDiConfronto.get(i).get(1)-vettorePrevisioni.get(i).get(1),2),0.5);
 
+			/*
         	if(errore_in_caselle!=0){
 				System.out.println(" (MV 6) errore_in_casella "+errore_in_caselle);
 				System.out.println("("+vettoreDiConfronto.get(i).get(0)+" - "+vettorePrevisioni.get(i).get(0)+")^2 -");
 				System.out.println("("+vettoreDiConfronto.get(i).get(1)+" - "+vettorePrevisioni.get(i).get(1)+")^2");
 			}
+			*/
 
 	        //introduco la clusterizzazione per tempo
 	        if(vettoreDiConfronto.get(i).get(2)>=0 && vettoreDiConfronto.get(i).get(2)<=1){
@@ -667,10 +615,11 @@ public class MediaVarianzaAutomaticaPivotFinale {
 					System.out.println(" (MV 7) numero negativo->"+vettoreDiConfronto.get(i).get(2));
 			}
 
+			/*
 			System.out.print("Valori del vettore ");
 			for(int i=0;i<13;i++)
 				System.out.print(vettoreDeiRisultatiClusterizzato[i][0]+";");
-
+			*/
 
 			for(int j=0;j<vettoreDeiRisultatiClusterizzato.length;j++){
 				int afferenze=(int)vettoreDeiRisultatiClusterizzato[j][0];
@@ -813,7 +762,9 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 		double mediaErroreTemp=(float)sommaDist/(float)vettorePrevisioni_0.size();
 		double varianzaErroreTemp=varianza(vettoreTempErrori,mediaErroreTemp);
-		risPerc+=metriLato+";"+stringaDeltaTime+";0%;"+df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_0.size()+"\n";
+		risPerc+= indice+";"+metriLato+";"+stringaDeltaTime+";0%;"+
+				  df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_0.size()+
+				  df.format(metriLato*mediaErroreTemp)+";"+df.format(metriLato*varianzaErroreTemp)+";"+df.format(Math.pow(metriLato*varianzaErroreTemp,0.5))+"\n";
 
 		for(int i=1;i<vettorePrevisioni_25.size();i++){
 			distanza=Math.pow(Math.pow(vettoreDiConfronto_25.get(i).get(0)-vettorePrevisioni_25.get(i).get(0),2)
@@ -824,7 +775,9 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 		mediaErroreTemp=(float)sommaDist/(float)vettorePrevisioni_25.size();
 		varianzaErroreTemp=varianza(vettoreTempErrori,mediaErroreTemp);
-		risPerc+=metriLato+";"+stringaDeltaTime+";25%;"+df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_25.size()+"\n";
+		risPerc+= indice+";"+metriLato+";"+stringaDeltaTime+";25%;"+
+				  df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_25.size()+
+				  df.format(metriLato*mediaErroreTemp)+";"+df.format(metriLato*varianzaErroreTemp)+";"+df.format(Math.pow(metriLato*varianzaErroreTemp,0.5))+"\n";
 
 
 		for(int i=0;i<vettorePrevisioni_50.size();i++){
@@ -836,7 +789,9 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 		mediaErroreTemp=(float)sommaDist/(float)vettorePrevisioni_50.size();
 		varianzaErroreTemp=varianza(vettoreTempErrori,mediaErroreTemp);
-		risPerc+=metriLato+";"+stringaDeltaTime+";50%;"+df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_50.size()+"\n";
+		risPerc+= indice+";"+metriLato+";"+stringaDeltaTime+";50%;"+
+				  df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_50.size()+
+				  df.format(metriLato*mediaErroreTemp)+";"+df.format(metriLato*varianzaErroreTemp)+";"+df.format(Math.pow(metriLato*varianzaErroreTemp,0.5))+"\n";
 
 		for(int i=0;i<vettoreDiConfronto_75.size();i++){
 			distanza=Math.pow(Math.pow(vettoreDiConfronto_75.get(i).get(0)-vettorePrevisioni_75.get(i).get(0),2)
@@ -847,7 +802,9 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 		mediaErroreTemp=(float)sommaDist/(float)vettoreDiConfronto_75.size();
 		varianzaErroreTemp=varianza(vettoreTempErrori,mediaErroreTemp);
-		risPerc+=metriLato+";"+stringaDeltaTime+";75%;"+df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettoreDiConfronto_75.size()+"\n";
+		risPerc+= indice+";"+metriLato+";"+stringaDeltaTime+";75%;"+
+				  df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettoreDiConfronto_75.size()+
+				  df.format(metriLato*mediaErroreTemp)+";"+df.format(metriLato*varianzaErroreTemp)+";"+df.format(Math.pow(metriLato*varianzaErroreTemp,0.5))+"\n";
 
 		String[] risultato=new String[2];
 		risultato[0]=risTemp;	risultato[1]=risPerc;
