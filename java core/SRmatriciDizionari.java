@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class SRmatriciDizionari{
 
@@ -131,7 +133,6 @@ public class SRmatriciDizionari{
 			}
 		}
 
-		System.out.println("Read file");
 		try{
 			FileInputStream fstream = new FileInputStream(PATH);
 			DataInputStream in = new DataInputStream(fstream);
@@ -197,7 +198,6 @@ public class SRmatriciDizionari{
 		}catch (Exception e){
 			System.err.println("Errore: " + e.getMessage());
 		}
-		System.out.println("End Read file");
 		// normalizzazione di A con moltiplicazione per il futuro merge con B
 		double mergerD=0.15;
 
@@ -205,9 +205,14 @@ public class SRmatriciDizionari{
 		for(int i=0;i<n;i++){
 			for(int j=0;j<m;j++){
 				if(DizA_sommaRighe[i][j]!=0){
+
+					long yourmilliseconds = System.currentTimeMillis();
+					SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+					Date resultdate = new Date(yourmilliseconds);
+					System.out.println("Set ("+i+")("+j+") - "+sdf.format(resultdate));
+
 					for(int z=0;z<n;z++){
 						for(int w=0;w<m;w++){
-							System.out.println("("+i+")("+j+"),("+z+")("+w+")");
 							DizA = SetHash(DizA,i,j,z,w,
 								(GetHash(DizA,i,j,z,w)/(float)DizA_sommaRighe[i][j])*(float)(1-mergerD)
 							);

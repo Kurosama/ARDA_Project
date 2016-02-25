@@ -57,10 +57,17 @@ introdurla sopratutto per avere una base di sviluppo pi\`u accurata.
 \subsubsection{Calcolo della matrice accelerazione}
 Nel calcolo delle matrici ARDA, per ottenere la matrice delle accelerazione $M_{acc}$ si esegue, sulla
 matrice $M_{imp}$, una funzione gradiente per calcolare i valori del vettore in tutte le zone. Come si pu\`o
-vedere in FIGURA ???, la matrice generata ha ottimi risultati con punti di importanza distanti tra loro
+vedere in FIGURA 2.1, la matrice generata ha ottimi risultati con punti di importanza distanti tra loro
 ma con punti vicini il calcolo del vettore ha qualche incongruenza nelle zone adiacenti.\\
 Utilizzando l'algoritmo di Sobel, questo distribuisce con maggior equit\`a le forze anche in presenza di
 molti punti di interessi vicini tra loro.\\
+\begin{figure}
+    \begin{center}
+    \includegraphics[scale=0.4]{tt.png}
+    \caption[Macc]{Matrice di accelerazione}
+    \label{etichetta}
+    \end{center}
+\end{figure}
 Sia nel precedente progetto che in questo, la matrice di accelerazione viene calcolata dopo un solo processo
 della matrice $M_{imp}$ calcolando le forze solo nelle zone adiacenti a quelle con dei valori di interesse.
 Pensando proprio all'idea su cui si basa l'utilizzo delle matrici di accelerazione si pu\`o capire quanto possa
@@ -74,9 +81,15 @@ M_{acc} = G^{n}(M_{imp})
 Un'ulteriore obbiettivo del progetto \`e creare un'interfaccia user-frienly per poter eseguire i setup e visualizzare
 i risultati in modo semplice e veloce. Nel progetto precedente bisognava eseguire i setup dei file,
 directory e impostazioni direttamente nei vari file del codice.\\
-\\
-FIGURA ???\\
-\\
+
+\begin{figure}[h]
+    \begin{center}
+    \includegraphics[scale=0.5]{Interface.png}
+    \caption[IntJava]{Interfaccia Java}
+    \label{etichetta}
+    \end{center}
+\end{figure}
+
 Adesso l'utente ha la possibilit\`a di impostare:
 \begin{enumerate}
     \item i file mediante una semplice selezione tramite un finder navigando nel filesytem
@@ -91,16 +104,19 @@ divisa in varie schede (come si pu\`o vedere dall'immagine) generate in base all
 \subsection{Visualizzazione plot matrici}
 Questa funzionalit\`a ha per\`o tolto la possibilit\`a di selezione multipla della grandezza delle zone di importanza
 e impostato un limite di 2 possibili tipi di indice.
-\\
-FIGURA ??\\
-\\
+
+\begin{figure}[h]
+    \begin{center}
+    \includegraphics[scale=0.5]{Interface_plot.png}
+    \caption[IntJava]{Interfaccia Java}
+    \label{etichetta}
+    \end{center}
+\end{figure}
+
 Infatti la visualizzazione e la gestione delle schede sarebbe stata troppo dispersiva data la possibilit\`a di
 generare 25 casi separati con almeno 7 grafici differenti per ognuno di essi ed un totale di 175 schede massime.
 Con le limitazioni imposte si arriva a un massimo di 14 schede divise in 2 righe, sufficienti per avere subito
 dei grafici e poter fare un confronto veloce tra 2 tipi di indice differenti.\\
-\\
-FIGURA ??\\
-\\
 Questa piccola variazione per\`o non influenza la generazione dei file CSV con i risultati. Essi non vengono cancellati
 e, con il lancio di tutte le procedure mediante l'interfaccia, possono essere facilmente reperibili per effettuare
 analisi direttamente dai dati che normalmente si visualizzano nei grafici.

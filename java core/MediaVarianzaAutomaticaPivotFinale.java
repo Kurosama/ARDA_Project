@@ -56,10 +56,12 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 		// Ciclo Indici
 		for(int i=0;i<VettoreIndici.length;i++){
-
+			long startTime = System.currentTimeMillis();
 			risTemp="";
 			risPerc="";
 			String indice=VettoreIndici[i];
+			if(indice==null){ break; }
+
 			System.out.println("TEST indice "+indice+" iniziato");
 			if(indice == "SR" ){
 				int[] VettoreNumIterazSRtoMimp=new int[4];	//numero di iterazioni per calcolo autovettore dominante in space rank
@@ -172,7 +174,8 @@ public class MediaVarianzaAutomaticaPivotFinale {
 					System.err.println(" (MV 2) Errore: " + e.getMessage());
 				}
 			} // Controllo SR
-			System.out.println("TEST indice "+indice+" concluso");
+			long endTime = System.currentTimeMillis();
+			System.out.println("TEST indice "+indice+" concluso in "+(float)((endTime - startTime)/1000.0)+ " secondi");
 			System.gc();
 		}// Ciclo Indici
 
@@ -533,8 +536,8 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
         	int nPunti;
         	//valuto di ricalcolare la distanza nel mio modo (quella sferica)
-        	double errore_in_caselle=Math.pow(Math.pow(vettoreDiConfronto.get(i).get(0)-vettorePrevisioni.get(i).get(0),2)
-        									  +Math.pow(vettoreDiConfronto.get(i).get(1)-vettorePrevisioni.get(i).get(1),2),0.5);
+        	double errore_in_caselle=Math.pow(Math.pow(vettoreDiConfronto.get(i).get(0)-vettorePrevisioni.get(i).get(0),2)+
+        									  Math.pow(vettoreDiConfronto.get(i).get(1)-vettorePrevisioni.get(i).get(1),2),0.5);
 
 			/*
         	if(errore_in_caselle!=0){
@@ -546,9 +549,8 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 	        //introduco la clusterizzazione per tempo
 	        if(vettoreDiConfronto.get(i).get(2)>=0 && vettoreDiConfronto.get(i).get(2)<=1){
-	        	nPunti=(int)vettoreDeiRisultatiClusterizzato[0][0];
+	        	nPunti=(int)++vettoreDeiRisultatiClusterizzato[0][0];
 	            vettoreDeiRisultatiClusterizzato[0][nPunti]=errore_in_caselle;
-	            vettoreDeiRisultatiClusterizzato[0][0]++;
 	        }
 	        else{
 	        	if(vettoreDiConfronto.get(i).get(2)>1 && vettoreDiConfronto.get(i).get(2)<=5){
@@ -628,123 +630,149 @@ public class MediaVarianzaAutomaticaPivotFinale {
 					sommaTot+=vettoreDeiRisultatiClusterizzato[j][k];
 				}
 
-			//System.out.println();
-			//System.out.println("sommaTot "+sommaTot+" afferenze"+afferenze+"\n");
-			double mediaInCaselle=(float)sommaTot/(float)afferenze;
-			double varianzaInCaselle=varianza(vettoreDeiRisultatiClusterizzato[j],mediaInCaselle);
+				//System.out.println();
+				//System.out.println("sommaTot "+sommaTot+" afferenze"+afferenze+"\n");
+				double mediaInCaselle=(float)sommaTot/(float)afferenze;
+				double varianzaInCaselle=varianza(vettoreDeiRisultatiClusterizzato[j],mediaInCaselle);
 
-			//Qui campia ed utilizza: (1) l'indice  (2) il numero  di iterazioni
+				//Qui campia ed utilizza: (1) l'indice  (2) il numero  di iterazioni
 
-			switch(j){
-				case 0:
-					//System.out.println("Media errore in caselle range [0s  1s]: "+ mediaInCaselle);
-					//System.out.println( "Varianza errore in caselle range [0s  1s]: "+varianzaInCaselle);
-					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]0s  1s]: "+df.format(mediaInCaselle)+"\n";
-					s=s+"Varianza errore in caselle range ]0s  1s]: "+df.format(varianzaInCaselle)+"\n";
-					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"[0s  1s]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
-				case 1:
-					//System.out.println( "Media errore in caselle range ]1s  5s]: "+mediaInCaselle);
-					//System.out.println( "Varianza errore in caselle range ]1s  5s]: "+varianzaInCaselle);
-					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]1s  5s]: "+df.format(mediaInCaselle)+"\n";
-					s=s+"Varianza errore in caselle range ]1s  5s]: "+df.format(varianzaInCaselle)+"\n";
-					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"[1s  5s]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
-				case 2:
-					//System.out.println( "Media errore in caselle range ]5s  10s]: "+mediaInCaselle);
-					//System.out.println( "Varianza errore in caselle range ]5s  10s]: "+varianzaInCaselle);
-					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]5s  10s]: "+df.format(mediaInCaselle)+"\n";
-					s=s+"Varianza errore in caselle range ]5s  10s]: "+df.format(varianzaInCaselle)+"\n";
-					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]5s  10s]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
-				case 3:
-					//System.out.println( "Media errore in caselle range ]10s  15s]: "+mediaInCaselle);
-					//System.out.println( "Varianza errore in caselle range ]10s  15s]: "+varianzaInCaselle);
-					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]10s  15s]: "+df.format(mediaInCaselle)+"\n";
-					s=s+"Varianza errore in caselle range ]10s  15s]: "+df.format(varianzaInCaselle)+"\n";
-					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]10s  15s]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
-				case 4:
-					//System.out.println( "Media errore in caselle range ]15s  30s]: "+mediaInCaselle);
-					//System.out.println( "Varianza errore in caselle range ]15s  30s]: "+varianzaInCaselle);
-					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]15s  30s]: "+df.format(mediaInCaselle)+"\n";
-					s=s+"Varianza errore in caselle range ]15s  30s]: "+df.format(varianzaInCaselle)+"\n";
-					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]15s  30s]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
-				case 5:
-					//System.out.println( "Media errore in caselle range ]30s  1m]: "+mediaInCaselle);
-					//System.out.println( "Varianza errore in caselle range ]30s  1m]: "+varianzaInCaselle);
-					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]30s  1m]: "+df.format(mediaInCaselle)+"\n";
-					s=s+"Varianza errore in caselle range ]30s  1m]: "+df.format(varianzaInCaselle)+"\n";
-					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]30s  1m]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
-				case 6:
-					//System.out.println( "Media errore in caselle range ]1m  5m]: "+mediaInCaselle);
-					//System.out.println( "Varianza errore in caselle range ]1m  5m]: "+varianzaInCaselle);
-					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]1m  5m]: "+df.format(mediaInCaselle)+"\n";
-					s=s+"Varianza errore in caselle range ]1m  5m]: "+df.format(varianzaInCaselle)+"\n";
-					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]1m  5m]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
-				case 7:
-					//System.out.println( "Media errore in caselle range ]5m  10m]: "+mediaInCaselle);
-					//System.out.println( "Varianza errore in caselle range ]5m  10m]: "+varianzaInCaselle);
-					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]5m  10m]: "+df.format(mediaInCaselle)+"\n";
-					s=s+"Varianza errore in caselle range ]5m  10m]: "+df.format(varianzaInCaselle)+"\n";
-					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]5m  10m]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
-				case 8:
-					//System.out.println( "Media errore in caselle range ]10m  15m]: "+mediaInCaselle);
-					//System.out.println( "Varianza errore in caselle range ]10m  15m]: "+varianzaInCaselle);
-					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]10m  15m]: "+df.format(mediaInCaselle)+"\n";
-					s=s+"Varianza errore in caselle range ]10m  15m]: "+df.format(varianzaInCaselle)+"\n";
-					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]10m  15m]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
-				case 9:
-					//System.out.println( "Media errore in caselle range ]15m  30m]: "+mediaInCaselle);
-					//System.out.println( "Varianza errore in caselle range ]15m  30m]: "+varianzaInCaselle);
-					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]15m  30m]: "+df.format(mediaInCaselle)+"\n";
-					s=s+"Varianza errore in caselle range ]15m  30m]: "+df.format(varianzaInCaselle)+"\n";
-					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]15m  30m]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
-				case 10:
-					//System.out.println( "Media errore in caselle range ]30m  1h]: "+mediaInCaselle);
-					//System.out.println( "Varianza errore in caselle range ]30m  1h]: "+varianzaInCaselle);
-					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]30m  1h]: "+df.format(mediaInCaselle)+"\n";
-					s=s+"Varianza errore in caselle range ]30m  1h]: "+df.format(varianzaInCaselle)+"\n";
-					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]30m  1h]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
-				case 11:
-					//System.out.println( "Media errore in caselle range ]1h  5h]: "+mediaInCaselle);
-					//System.out.println( "Varianza errore in caselle range ]1h  5h]: "+varianzaInCaselle);
-					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]1h  5h]: "+df.format(mediaInCaselle)+"\n";
-					s=s+"Varianza errore in caselle range ]1h  5h]: "+df.format(varianzaInCaselle)+"\n";
-					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]1h  5h]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
-				case 12:
-					//System.out.println( "Media errore in caselle range ]5h  inf]: "+mediaInCaselle);
-					//System.out.println( "Varianza errore in caselle range ]5h  inf]: "+varianzaInCaselle);
-					//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
-					s=s+"Media errore in caselle range ]5h  inf]: "+df.format(mediaInCaselle)+"\n";
-					s=s+"Varianza errore in caselle range ]5h  inf]: "+df.format(varianzaInCaselle)+"\n";
-					s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
-					risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]5h  inf]"+";"+df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+"\n"; break;
-				default:
-					//errore
-					System.out.println("(MV 8) errore nel select case");
-			}//fine SC
-		}//fine for
+				switch(j){
+					case 0:
+						//System.out.println("Media errore in caselle range [0s  1s]: "+ mediaInCaselle);
+						//System.out.println( "Varianza errore in caselle range [0s  1s]: "+varianzaInCaselle);
+						//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+						s=s+"Media errore in caselle range ]0s  1s]: "+df.format(mediaInCaselle)+"\n";
+						s=s+"Varianza errore in caselle range ]0s  1s]: "+df.format(varianzaInCaselle)+"\n";
+						s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
+						risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"[0s  1s]"+";"
+									   +df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+";"
+									   +df.format(metriLato*mediaInCaselle)+";"+df.format(metriLato*varianzaInCaselle)+";"+df.format(Math.pow(metriLato*varianzaInCaselle,0.5))+"\n"; break;
+					case 1:
+						//System.out.println( "Media errore in caselle range ]1s  5s]: "+mediaInCaselle);
+						//System.out.println( "Varianza errore in caselle range ]1s  5s]: "+varianzaInCaselle);
+						//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+						s=s+"Media errore in caselle range ]1s  5s]: "+df.format(mediaInCaselle)+"\n";
+						s=s+"Varianza errore in caselle range ]1s  5s]: "+df.format(varianzaInCaselle)+"\n";
+						s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
+						risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"[1s  5s]"+";"
+									   +df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+";"
+									   +df.format(metriLato*mediaInCaselle)+";"+df.format(metriLato*varianzaInCaselle)+";"+df.format(Math.pow(metriLato*varianzaInCaselle,0.5))+"\n"; break;
+					case 2:
+						//System.out.println( "Media errore in caselle range ]5s  10s]: "+mediaInCaselle);
+						//System.out.println( "Varianza errore in caselle range ]5s  10s]: "+varianzaInCaselle);
+						//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+						s=s+"Media errore in caselle range ]5s  10s]: "+df.format(mediaInCaselle)+"\n";
+						s=s+"Varianza errore in caselle range ]5s  10s]: "+df.format(varianzaInCaselle)+"\n";
+						s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
+						risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]5s  10s]"+";"
+						               +df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+";"
+									   +df.format(metriLato*mediaInCaselle)+";"+df.format(metriLato*varianzaInCaselle)+";"+df.format(Math.pow(metriLato*varianzaInCaselle,0.5))+"\n"; break;
+					case 3:
+						//System.out.println( "Media errore in caselle range ]10s  15s]: "+mediaInCaselle);
+						//System.out.println( "Varianza errore in caselle range ]10s  15s]: "+varianzaInCaselle);
+						//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+						s=s+"Media errore in caselle range ]10s  15s]: "+df.format(mediaInCaselle)+"\n";
+						s=s+"Varianza errore in caselle range ]10s  15s]: "+df.format(varianzaInCaselle)+"\n";
+						s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
+						risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]10s  15s]"+";"
+						               +df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+","
+									   +df.format(metriLato*mediaInCaselle)+";"+df.format(metriLato*varianzaInCaselle)+";"+df.format(Math.pow(metriLato*varianzaInCaselle,0.5))+"\n"; break;
+					case 4:
+						//System.out.println( "Media errore in caselle range ]15s  30s]: "+mediaInCaselle);
+						//System.out.println( "Varianza errore in caselle range ]15s  30s]: "+varianzaInCaselle);
+						//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+						s=s+"Media errore in caselle range ]15s  30s]: "+df.format(mediaInCaselle)+"\n";
+						s=s+"Varianza errore in caselle range ]15s  30s]: "+df.format(varianzaInCaselle)+"\n";
+						s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
+						risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]15s  30s]"+";"
+						               +df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+";"
+									   +df.format(metriLato*mediaInCaselle)+";"+df.format(metriLato*varianzaInCaselle)+";"+df.format(Math.pow(metriLato*varianzaInCaselle,0.5))+"\n"; break;
+					case 5:
+						//System.out.println( "Media errore in caselle range ]30s  1m]: "+mediaInCaselle);
+						//System.out.println( "Varianza errore in caselle range ]30s  1m]: "+varianzaInCaselle);
+						//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+						s=s+"Media errore in caselle range ]30s  1m]: "+df.format(mediaInCaselle)+"\n";
+						s=s+"Varianza errore in caselle range ]30s  1m]: "+df.format(varianzaInCaselle)+"\n";
+						s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
+						risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]30s  1m]"+";"
+									   +df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+";"
+									   +df.format(metriLato*mediaInCaselle)+";"+df.format(metriLato*varianzaInCaselle)+";"+df.format(Math.pow(metriLato*varianzaInCaselle,0.5))+"\n"; break;
+					case 6:
+						//System.out.println( "Media errore in caselle range ]1m  5m]: "+mediaInCaselle);
+						//System.out.println( "Varianza errore in caselle range ]1m  5m]: "+varianzaInCaselle);
+						//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+						s=s+"Media errore in caselle range ]1m  5m]: "+df.format(mediaInCaselle)+"\n";
+						s=s+"Varianza errore in caselle range ]1m  5m]: "+df.format(varianzaInCaselle)+"\n";
+						s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
+						risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]1m  5m]"+";"
+									   +df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+";"
+									   +df.format(metriLato*mediaInCaselle)+";"+df.format(metriLato*varianzaInCaselle)+";"+df.format(Math.pow(metriLato*varianzaInCaselle,0.5))+"\n"; break;
+					case 7:
+						//System.out.println( "Media errore in caselle range ]5m  10m]: "+mediaInCaselle);
+						//System.out.println( "Varianza errore in caselle range ]5m  10m]: "+varianzaInCaselle);
+						//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+						s=s+"Media errore in caselle range ]5m  10m]: "+df.format(mediaInCaselle)+"\n";
+						s=s+"Varianza errore in caselle range ]5m  10m]: "+df.format(varianzaInCaselle)+"\n";
+						s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
+						risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]5m  10m]"+";"
+									   +df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+";"
+									   +df.format(metriLato*mediaInCaselle)+";"+df.format(metriLato*varianzaInCaselle)+";"+df.format(Math.pow(metriLato*varianzaInCaselle,0.5))+"\n"; break;
+					case 8:
+						//System.out.println( "Media errore in caselle range ]10m  15m]: "+mediaInCaselle);
+						//System.out.println( "Varianza errore in caselle range ]10m  15m]: "+varianzaInCaselle);
+						//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+						s=s+"Media errore in caselle range ]10m  15m]: "+df.format(mediaInCaselle)+"\n";
+						s=s+"Varianza errore in caselle range ]10m  15m]: "+df.format(varianzaInCaselle)+"\n";
+						s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
+						risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]10m  15m]"+";"
+									   +df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+";"
+									   +df.format(metriLato*mediaInCaselle)+";"+df.format(metriLato*varianzaInCaselle)+";"+df.format(Math.pow(metriLato*varianzaInCaselle,0.5))+"\n"; break;
+					case 9:
+						//System.out.println( "Media errore in caselle range ]15m  30m]: "+mediaInCaselle);
+						//System.out.println( "Varianza errore in caselle range ]15m  30m]: "+varianzaInCaselle);
+						//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+						s=s+"Media errore in caselle range ]15m  30m]: "+df.format(mediaInCaselle)+"\n";
+						s=s+"Varianza errore in caselle range ]15m  30m]: "+df.format(varianzaInCaselle)+"\n";
+						s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
+						risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]15m  30m]"+";"
+						               +df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+";"
+									   +df.format(metriLato*mediaInCaselle)+";"+df.format(metriLato*varianzaInCaselle)+";"+df.format(Math.pow(metriLato*varianzaInCaselle,0.5))+"\n"; break;
+					case 10:
+						//System.out.println( "Media errore in caselle range ]30m  1h]: "+mediaInCaselle);
+						//System.out.println( "Varianza errore in caselle range ]30m  1h]: "+varianzaInCaselle);
+						//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+						s=s+"Media errore in caselle range ]30m  1h]: "+df.format(mediaInCaselle)+"\n";
+						s=s+"Varianza errore in caselle range ]30m  1h]: "+df.format(varianzaInCaselle)+"\n";
+						s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
+						risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]30m  1h]"+";"
+						               +df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+";"
+									   +df.format(metriLato*mediaInCaselle)+";"+df.format(metriLato*varianzaInCaselle)+";"+df.format(Math.pow(metriLato*varianzaInCaselle,0.5))+"\n"; break;
+					case 11:
+						//System.out.println( "Media errore in caselle range ]1h  5h]: "+mediaInCaselle);
+						//System.out.println( "Varianza errore in caselle range ]1h  5h]: "+varianzaInCaselle);
+						//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+						s=s+"Media errore in caselle range ]1h  5h]: "+df.format(mediaInCaselle)+"\n";
+						s=s+"Varianza errore in caselle range ]1h  5h]: "+df.format(varianzaInCaselle)+"\n";
+						s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
+						risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]1h  5h]"+";"
+						               +df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+";"
+									   +df.format(metriLato*mediaInCaselle)+";"+df.format(metriLato*varianzaInCaselle)+";"+df.format(Math.pow(metriLato*varianzaInCaselle,0.5))+"\n"; break;
+					case 12:
+						//System.out.println( "Media errore in caselle range ]5h  inf]: "+mediaInCaselle);
+						//System.out.println( "Varianza errore in caselle range ]5h  inf]: "+varianzaInCaselle);
+						//System.out.println( "Numero previsioni afferenti: "+afferenze+"\n");
+						s=s+"Media errore in caselle range ]5h  inf]: "+df.format(mediaInCaselle)+"\n";
+						s=s+"Varianza errore in caselle range ]5h  inf]: "+df.format(varianzaInCaselle)+"\n";
+						s=s+"Numero previsioni afferenti: "+afferenze+"\n\n";
+						risTemp=risTemp+indice+";"+metriLato+";"+stringaDeltaTime+";"+"]5h  inf]"+";"
+						               +df.format(mediaInCaselle)+";"+df.format(varianzaInCaselle)+";"+afferenze+";"
+									   +df.format(metriLato*mediaInCaselle)+";"+df.format(metriLato*varianzaInCaselle)+";"+df.format(Math.pow(metriLato*varianzaInCaselle,0.5))+"\n"; break;
+					default:
+						//errore
+						System.out.println("(MV 8) errore nel select case");
+				}//fine SC
+			}//fine for
 
 		//############################################################
 		//#      Ora mi occupo della rilevazione delle percentuali   #

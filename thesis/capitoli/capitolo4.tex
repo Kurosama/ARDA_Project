@@ -1,7 +1,74 @@
 \chapter{Comparative prestazionali}
+Questo capitolo \`e stato inserito pensando a come questi algoritmi se possono
+essere utilizzati su dispositivi usati tutti i giorni oppure necessitano di
+ulteriori miglioramenti e/o determinate macchine o ambianti.\\
+Non avendo un insieme di risultati abbastanza grande da fare delle statistiche
+che possano descrivono efficacemente i vari casi, questo capitolo \`e puramente
+teorico e cerca di dare un'ulteriore ambito di sviluppo per le ricerche future.\\
+\\
+Tutti i risultati che si utilizzano fanno riferimento all'esecuzione non solo
+dell'algoritmo di previsione, ma anche di lettura dello storico e dei persorsi.
+Questo perch\`e, visto la scelta di eseguire il codice in un sistema con risorse
+limitate (RaspBerry Pi) si vuole tener conto anche della velocità di accesso alla memoria.
+L'algoritmo \`e stato eseguito 120 volte per tutti gli indici, tranne per lo
+\textit{spaceRank} che \`e stato eseguito solo 6 volte. Queste esecusioni sono ripartite
+equamente per 3 differenti dimensioni delle localit\`a (50,100,500 metri).
+\\
+Le tre macchine che si utilizzeranno per i vari confronti avranno le seguenti configurazioni:
+\begin{itemize}
+\item [M1] Processore Intel i7 \cite{new_3} e 8Gb di RAM DDR3
+\item [M2] Processore Intel Core 2 Duo \cite{new_4} e 4Gb di RAM DDR2
+\item [M3] Processore ARM \cite{new_5} con 512Mb di SDRAM
+\end{itemize}
 
 \section{Confronto tra Java e Python}
+Per il confronto tra le due versioni dell'algoritmo si \`e scelto di utilizzare la
+configurazione M1. I risultati visibili in tabella sono la media dei vari tempi
+rilevati nell'area di Atlanta.
+\begin{table}[]
+\centering
+\caption{Tempi di esecuzione algoritomo ARDA (M1)}
+\label{bcmrk_ARDA}
+\begin{tabular}{lllll}
+\hline
+\multicolumn{1}{|c|}{}                        & \multicolumn{1}{|c|}{Java}    & \multicolumn{1}{|c|}{Python} \\
+\multicolumn{1}{|c|}{$\sharp$\textit{visits}} & \multicolumn{1}{|c|}{1,543 s} & \multicolumn{1}{|c|}{1,613 s}\\
+\multicolumn{1}{|c|}{\textit{avgTime}}        & \multicolumn{1}{|c|}{0,979 s} & \multicolumn{1}{|c|}{0,975 s}\\
+\multicolumn{1}{|c|}{\textit{totTime}}        & \multicolumn{1}{|c|}{0,976 s} & \multicolumn{1}{|c|}{0,978 s}\\
+\multicolumn{1}{|c|}{\textit{ComLin}}         & \multicolumn{1}{|c|}{0,987 s} & \multicolumn{1}{|c|}{0,985 s}\\
+\multicolumn{1}{|c|}{\textit{spaceRank}}     & \multicolumn{1}{|c|}{ 67 h}    & \multicolumn{1}{|c|}{67 h} \\
+\hline
+\end{tabular}
+\end{table}
+La cosa che subito colpisce sono i valori di calcolo dello \textit{spaceRank}.
+I quasi 3 giorni necessari al calcolo sono dovuti principalmente al calcolo dell'autovettore
+della matrice $M_{imp}$ che impiega il 90\% del tempo di esecuzione. Infatti il
+calcolo delle statistiche \`e uguale per tutti visto che valuta allo stesso modo le matrici
+di importanza, accelerazione e potenze allo stesso modo, indipendentemente dall'indice
+usato per calcolarle.\\
+Valutando i risultati rimanenti vi sono dei leggeri miglioramenti e questi fa ben sperate
+per l'esecuzione con insiemi di dati pi\`u corposi.
 
 \section{Confronto temporate}
-
-\section{Test su dispobitibi embedded}
+In questa sezione verr\`a fatta una comparativa simile alla precedente ma esaminando
+la differenza tra due macchine di generazioni differenti per capire quanto la tecnologia
+sia migliorata, tenendo conto che prestazioni simili alla configurazione M2 esame stanno
+per essere raggiunte da smartphone e tablet comunemente utilizzati dall'utente medio.
+\begin{table}[]
+\centering
+\caption{Tempi di esecuzione algoritomo ARDA (M2)}
+\label{bcmrk_ARDA}
+\begin{tabular}{lllll}
+\hline
+\multicolumn{1}{|c|}{}                        & \multicolumn{1}{|c|}{Java} & \multicolumn{1}{|c|}{Python}  & \multicolumn{1}{|c|}{Diff. da M1} \\
+\multicolumn{1}{|c|}{$\sharp$\textit{visits}} & \multicolumn{1}{|c|}{ s}   & \multicolumn{1}{|c|}{ s} & \multicolumn{1}{|c|}{ s}             \\
+\multicolumn{1}{|c|}{\textit{avgTime}}        & \multicolumn{1}{|c|}{ s}   & \multicolumn{1}{|c|}{ s} & \multicolumn{1}{|c|}{ s}             \\
+\multicolumn{1}{|c|}{\textit{totTime}}        & \multicolumn{1}{|c|}{ s}   & \multicolumn{1}{|c|}{ s} & \multicolumn{1}{|c|}{ s}             \\
+\multicolumn{1}{|c|}{\textit{ComLin}}         & \multicolumn{1}{|c|}{ s}   & \multicolumn{1}{|c|}{ s} & \multicolumn{1}{|c|}{ s}             \\
+\multicolumn{1}{|c|}{\textit{spaceRank}}      & \multicolumn{1}{|c|}{ h}   & \multicolumn{1}{|c|}{ h}    & \multicolumn{1}{|c|}{ s}\\
+\hline
+\end{tabular}
+\end{table}
+Anche qui i risultati sono incoraggianti visto il miglioramento nell'ordine del
+\% sui tempi di elaborazione. Questo fa ben sperare visto che la tecnoligia mobile
+migliora di anno in anno con processori sempre pi\`u performanti e vicini ai PC.
