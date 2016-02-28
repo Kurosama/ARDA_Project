@@ -77,17 +77,15 @@ public class MediaVarianzaAutomaticaPivotFinale {
 						SR_matrici=new SRmatriciDizionari(pathFile,metrilato,numeroIterazioni); 		//(2)
 
 						n=SR_matrici.get_n();			m=SR_matrici.get_m();
+						Xmin=Calc_Macc.get_Xmin();		Xmax=Calc_Macc.get_Xmax();
+						Ymin=Calc_Macc.get_Ymin();		Ymax=Calc_Macc.get_Ymax();
 
 						//ricavo i dati dai percorsi rilevati
-						n=SR_matrici.get_n();
-						m=SR_matrici.get_m();
-						Mimp=new double[n][m];
-						Mimp=SR_matrici.get_Mimp();
-						Macc=new double[n][m][2];
-						Macc=SR_matrici.get_Macc();
+						Mimp=new double[n][m];		Mimp=SR_matrici.get_Mimp();
+						Macc=new double[n][m][2];   Macc=SR_matrici.get_Macc();
+						Mpot=new double[n][m];		Mpot=SR_matrici.get_Mpot();
 
 						//System.out.println("\n\n############################################ INIZIO DEI TEST M.V.A.Pivot Finale (2) ###############################################");
-
 
 						for(j=0;j<VettoreDeltaTime0.length;j++){
 							double deltaTimeMassimo=VettoreDeltaTime0[j];
@@ -427,7 +425,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
             //eseguo la previsione 1 su 4 (partendo dal 0% del percorso)
             double[] actual_point=new double[2];	actual_point[0]=Double.parseDouble(X_secondo);	actual_point[1]=Double.parseDouble(Y_secondo);
-            double[] prev_point=new double[2];	  prev_point[0]=Double.parseDouble(X_primo);	  prev_point[1]=Double.parseDouble(Y_primo);
+            double[] prev_point=new double[2];	    prev_point[0]=Double.parseDouble(X_primo);	    prev_point[1]=Double.parseDouble(Y_primo);
             afterTime=(tempo_dove_prevedere.getTimeInMillis()-tempo_secondo.getTimeInMillis())/1000;
             risultato=ARDA.predict_next_for(actual_point,prev_point,Macc,Mimp,grid_info,afterTime,maxBrakeValue);
 
@@ -791,7 +789,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 		double mediaErroreTemp=(float)sommaDist/(float)vettorePrevisioni_0.size();
 		double varianzaErroreTemp=varianza(vettoreTempErrori,mediaErroreTemp);
 		risPerc+= indice+";"+metriLato+";"+stringaDeltaTime+";0%;"+
-				  df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_0.size()+
+				  df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_0.size()+";"+
 				  df.format(metriLato*mediaErroreTemp)+";"+df.format(metriLato*varianzaErroreTemp)+";"+df.format(Math.pow(metriLato*varianzaErroreTemp,0.5))+"\n";
 
 		for(int i=1;i<vettorePrevisioni_25.size();i++){
@@ -804,7 +802,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 		mediaErroreTemp=(float)sommaDist/(float)vettorePrevisioni_25.size();
 		varianzaErroreTemp=varianza(vettoreTempErrori,mediaErroreTemp);
 		risPerc+= indice+";"+metriLato+";"+stringaDeltaTime+";25%;"+
-				  df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_25.size()+
+				  df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_25.size()+";"+
 				  df.format(metriLato*mediaErroreTemp)+";"+df.format(metriLato*varianzaErroreTemp)+";"+df.format(Math.pow(metriLato*varianzaErroreTemp,0.5))+"\n";
 
 
@@ -818,7 +816,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 		mediaErroreTemp=(float)sommaDist/(float)vettorePrevisioni_50.size();
 		varianzaErroreTemp=varianza(vettoreTempErrori,mediaErroreTemp);
 		risPerc+= indice+";"+metriLato+";"+stringaDeltaTime+";50%;"+
-				  df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_50.size()+
+				  df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettorePrevisioni_50.size()+";"+
 				  df.format(metriLato*mediaErroreTemp)+";"+df.format(metriLato*varianzaErroreTemp)+";"+df.format(Math.pow(metriLato*varianzaErroreTemp,0.5))+"\n";
 
 		for(int i=0;i<vettoreDiConfronto_75.size();i++){
@@ -831,7 +829,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 		mediaErroreTemp=(float)sommaDist/(float)vettoreDiConfronto_75.size();
 		varianzaErroreTemp=varianza(vettoreTempErrori,mediaErroreTemp);
 		risPerc+= indice+";"+metriLato+";"+stringaDeltaTime+";75%;"+
-				  df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettoreDiConfronto_75.size()+
+				  df.format(mediaErroreTemp)+";"+df.format(varianzaErroreTemp)+";"+vettoreDiConfronto_75.size()+";"+
 				  df.format(metriLato*mediaErroreTemp)+";"+df.format(metriLato*varianzaErroreTemp)+";"+df.format(Math.pow(metriLato*varianzaErroreTemp,0.5))+"\n";
 
 		String[] risultato=new String[2];

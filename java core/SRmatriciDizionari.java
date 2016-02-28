@@ -17,6 +17,7 @@ public class SRmatriciDizionari{
 	private String hashkey;
 	private Map<String, Float> DizA;
 	private Map<String, Float> DizSR;
+	private double[][] DizA_sommaRighe;
 
 	//Trovo il giusto peso da porre in B[a][b][c][d] per i punti adiacenti (a,b)(c,d)
 	public double PesaB(int a, int b, int n, int m){
@@ -58,6 +59,18 @@ public class SRmatriciDizionari{
 			mapLoc.put(hashkey,(float)0);
 		}
 		return mapLoc;
+	}
+
+	public int[] GetHashCoord(String hash){
+        hash = hash.replace(")(",",");
+		hash = hash.substring(1, hash.length()-1);
+		String[] array = hash.split(",", -1);
+		int[]  result = new int[4];
+		for(int i=0; i<array.length;i++){
+			result[i] = Integer.parseInt(array[i]);
+		}
+		return result;
+
 	}
 
 	public SRmatriciDizionari(String PATH, int metrilato, int numeroiterazioniSRtoMimp){
@@ -112,8 +125,6 @@ public class SRmatriciDizionari{
 		n=(int)((Xmax-Xmin)/GradiLatoX)+1;  //larghezza matrice
 		m=(int)((Ymax-Ymin)/GradiLatoY)+1;  //altezza   matrice
 
-		System.out.println("N:"+n+" M:"+m);
-
 		int gg2=172800;
 		int min5=300;
 
@@ -121,10 +132,10 @@ public class SRmatriciDizionari{
 		DizA  = new HashMap();
 	   	DizSR = new HashMap();
 
-		double[][] DizA_sommaRighe=new double[n][m];
-		double[][] Mvisite=new double[n][m];
-		double[][] Mimp=new double[n][m];
-		double[][] Mpot=new double[n][m];
+		DizA_sommaRighe=new double[n][m];
+		Mvisite=new double[n][m];
+		Mimp=new double[n][m];
+		Mpot=new double[n][m];
 
 		for(int i=0;i<n;i++){
 			for(int j=0;j<m;j++){
@@ -198,27 +209,18 @@ public class SRmatriciDizionari{
 		}catch (Exception e){
 			System.err.println("Errore: " + e.getMessage());
 		}
+
+
 		// normalizzazione di A con moltiplicazione per il futuro merge con B
 		double mergerD=0.15;
 
-		System.out.println("Calculate DizA");
-		for(int i=0;i<n;i++){
-			for(int j=0;j<m;j++){
-				if(DizA_sommaRighe[i][j]!=0){
-
-					long yourmilliseconds = System.currentTimeMillis();
-					SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
-					Date resultdate = new Date(yourmilliseconds);
-					System.out.println("Set ("+i+")("+j+") - "+sdf.format(resultdate));
-
-					for(int z=0;z<n;z++){
-						for(int w=0;w<m;w++){
-							DizA = SetHash(DizA,i,j,z,w,
-								(GetHash(DizA,i,j,z,w)/(float)DizA_sommaRighe[i][j])*(float)(1-mergerD)
-							);
-						}
-					}
-				}
+		for (Map.Entry<String, Float> entry : DizA.entrySet()) {
+			int[] dati_hash = GetHashCoord(entry.getKey());
+			int i = dati_hash[0]; int j = dati_hash[1];
+			int z = dati_hash[2]; int w = dati_hash[3];
+			if(DizA_sommaRighe[i][j]!=0){
+				DizA = SetHash(DizA,i,j,z,w,
+					(GetHash(DizA,i,j,z,w)/(float)DizA_sommaRighe[i][j])*(float)(1-mergerD));
 			}
 		}
 
@@ -241,19 +243,14 @@ public class SRmatriciDizionari{
 
 		// Inserisco la parte relativa alla matrice A normalizzata
 		System.out.println("Normalize DizSR");
-		for(int a=0;a<n;a++){
-			for(int b=0;b<m;b++){
-				if(DizA_sommaRighe[a][b]!=0){
-					for(int c=0;c<n;c++){
-						for(int d=0;d<m;d++){
-							DizSR = IncrHash(DizSR,a,b,c,d,GetHash(DizA,a,b,c,d));
-						}
-					}
-				}
-			}
+		for (Map.Entry<String, Float> entry : DizA.entrySet()) {
+			int[] dati_hash = GetHashCoord(entry.getKey());
+			int i = dati_hash[0]; int j = dati_hash[1];
+			int z = dati_hash[2]; int w = dati_hash[3];
+			DizSR = SetHash(DizA,i,j,z,w, entry.getValue());
 		}
 
-//======================================================================
+		//======================================================================
 
 		//Calcolo matrice Mimp
 		double[] pagerank_step=new double[(n*m)];
@@ -268,20 +265,24 @@ public class SRmatriciDizionari{
 
 		numeroiterazioniSRtoMimp=1;
 		for(int numero=0;numero<numeroiterazioniSRtoMimp;numero++){
+
 			time0=(System.nanoTime()/(float)1000000000);
 			double[] new_pagerank_step=new double[(n*m)];
 			for(int i=0;i<(n*m);i++)
 				new_pagerank_step[i]=0;
 
-			for(int a=0;a<n;a++){
-				for(int b=0;b<m;b++){
-					for(int c=0;c<n;c++){
-						for(int d=0;d<m;d++){
-							if(GetHash(DizSR,a,b,c,d)!=0){
-								new_pagerank_step[(c*m)+d]+=(GetHash(DizSR,a,b,c,d)*pagerank_step[(c*m)+d]);
-							}
-						}
-					}
+			time1=System.nanoTime()/(float)1000000000;
+			if(numero==0){
+				System.out.printf("Tempo necessario per visionare il dizionario= %5.3f secondi\n",(time1-time0));
+				System.out.printf("Tempo necessario per visionare il dizionario= %5.3f minuti\n\n\n",((time1-time0)/60));
+			}
+
+			for (Map.Entry<String, Float> entry : DizSR.entrySet()) {
+				int[] dati_hash = GetHashCoord(entry.getKey());
+				int a = dati_hash[0]; int b = dati_hash[1];
+				int c = dati_hash[2]; int d = dati_hash[3];
+				if(GetHash(DizSR,a,b,c,d)!=0){
+					new_pagerank_step[(c*m)+d]+=(GetHash(DizSR,a,b,c,d)*pagerank_step[(c*m)+d]);
 				}
 			}
 

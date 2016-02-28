@@ -23,14 +23,14 @@ public class Main {
 		VettoreIndici[1]="TT";	// TT - Total Time
 		VettoreIndici[2]="AT";	// AT - Avarage Time
 		VettoreIndici[3]="CL";	// CL - Combination Line NV & TT
-		//VettoreIndici[4]="SR";	// SR - Space Rank
+		VettoreIndici[4]="SR";	// SR - Space Rank
 
 		int[] VettorePrecisioneGradi=new int[3];
 		VettorePrecisioneGradi[0]=50;	VettorePrecisioneGradi[1]=100;	VettorePrecisioneGradi[2]=500;
 		/*VettorePrecisioneGradi[0]=500;	VettorePrecisioneGradi[1]=1000;	VettorePrecisioneGradi[2]=3000;*/
 
-		MediaVarianzaAutomaticaPivotFinale prova=new MediaVarianzaAutomaticaPivotFinale("Atlanta.txt","percorsoAtlanta.txt",VettoreDeltaTime0,VettoreDeltaTime1,VettoreIndici,VettorePrecisioneGradi);
-		//MediaVarianzaAutomaticaPivotFinale prova=new MediaVarianzaAutomaticaPivotFinale("Stefano.txt","percorsoStefano.txt",VettoreDeltaTime0,VettoreDeltaTime1,VettoreIndici,VettorePrecisioneGradi);
+		//MediaVarianzaAutomaticaPivotFinale prova=new MediaVarianzaAutomaticaPivotFinale("Atlanta.txt","percorsoAtlanta.txt",VettoreDeltaTime0,VettoreDeltaTime1,VettoreIndici,VettorePrecisioneGradi);
+		MediaVarianzaAutomaticaPivotFinale prova=new MediaVarianzaAutomaticaPivotFinale("Stefano.txt","percorsoStefano.txt",VettoreDeltaTime0,VettoreDeltaTime1,VettoreIndici,VettorePrecisioneGradi);
 
     }
 }

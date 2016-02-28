@@ -57,5 +57,15 @@ Note latex
 à \grave{a}
 ù \grave{u}
 
-
 ################################################################################################################################################
+
+Installazione Linux
+
+-> python-numpy, python-scipy , openjdk-8-jdk,
+
+
+
+long yourmilliseconds = System.currentTimeMillis();
+SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+Date resultdate = new Date(yourmilliseconds);
+System.out.println("Set ("+i+")("+j+") - "+sdf.format(resultdate));
