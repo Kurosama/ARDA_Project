@@ -27,7 +27,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 	SRmatriciDizionari SR_matrici;
 	ARDA_algorithm ARDA;
 
-	int n,m,i,j;
+	int n,m;
 	double[][] Mimp;
 	double[][][] Macc;
 	double[][] Mpot;
@@ -41,7 +41,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 		// Setup formato decimali per export csv
 		df.setMinimumFractionDigits(2);
-		df.setMaximumFractionDigits(4);
+		df.setMaximumFractionDigits(8);
 		df.setRoundingMode(RoundingMode.DOWN);
 
 		//##############################################################################################################
@@ -87,7 +87,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 
 						//System.out.println("\n\n############################################ INIZIO DEI TEST M.V.A.Pivot Finale (2) ###############################################");
 
-						for(j=0;j<VettoreDeltaTime0.length;j++){
+						for(int j=0;j<VettoreDeltaTime0.length;j++){
 							double deltaTimeMassimo=VettoreDeltaTime0[j];
 							String stringaDeltaTime=VettoreDeltaTime1[j];
 							String[] risultato=new String[2];
@@ -95,6 +95,9 @@ public class MediaVarianzaAutomaticaPivotFinale {
 							risultato=esecuzioneTest(risTemp,risPerc,pathFilePercorsoTest,pathFile,metrilato,deltaTimeMassimo,indice,stringaDeltaTime);
 							risTemp=risultato[0]; risPerc=risultato[1];
 						}
+
+						// Export Matrice Mimp
+						exportOctave(Mimp,n,m,"Mimp_"+indice+"_"+metrilato);
 					}
 				}
 
@@ -152,6 +155,9 @@ public class MediaVarianzaAutomaticaPivotFinale {
 						risTemp=risultato[0]; risPerc=risultato[1];
 
 					} // Ciclo DeltaTime
+
+					// Export matrice Mimp
+					exportOctave(Mimp,n,m,"Mimp_"+indice+"_"+metrilato);
 				} // Ciclo
 
 				try{
@@ -160,7 +166,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 					Output.print(risTemp);
 					file.close();
 				}catch (Exception e){
-					System.err.println(" (MV 1) Errore: " + e.getMessage());
+					System.err.println(" (MV 4) Errore: " + e.getMessage());
 				}
 
 				try{
@@ -169,7 +175,7 @@ public class MediaVarianzaAutomaticaPivotFinale {
 					Output.print(risPerc);
 					file.close();
 				}catch (Exception e){
-					System.err.println(" (MV 2) Errore: " + e.getMessage());
+					System.err.println(" (MV 5) Errore: " + e.getMessage());
 				}
 			} // Controllo SR
 			long endTime = System.currentTimeMillis();
@@ -847,6 +853,36 @@ public class MediaVarianzaAutomaticaPivotFinale {
 		}
 		risultato=(float)somma/(float)valori;
 		return risultato;
+	}
+
+	// Esportazione in file per plot su Octave
+	public void exportOctave(double[][] matrix, int n, int m, String filename){
+		String result = "";
+		result += "# name: "+filename+"\n";
+		result += "# type: matrix\n";
+		result += "# rows: "+n+"\n";
+		result += "# columns: "+m+"\n";
+		for(int i=0;i<n;i++){
+			for(int j=0;j<m;j++){
+				if(j!=0){
+					result +=" ";
+				}
+				result += df.format(matrix[i][j]);
+
+			}
+			result +="\n";
+		}
+		result +="\n\n";
+
+		try{
+			FileOutputStream file = new FileOutputStream("..\\Risultati\\"+filename+".mat");
+			PrintStream Output = new PrintStream(file);
+			Output.print(result);
+			file.close();
+		}catch (Exception e){
+			System.err.println(" (MV 9) Errore: " + e.getMessage());
+		}
+
 	}
 
 }//class

@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Calendar;
 
 /*
  *      Reperisce i dati di tutti gli spostamenti effetuati contenuti su dei file opportunamente strutturati
@@ -109,6 +110,16 @@ public class CalcolaIndiciLocalita {
             int Pday,Pmonth,Pyear,Phour,Pminute,Psecond;	//data precedente
             Pday=1; Pmonth=1; Pyear=1900; Phour=0; Pminute=0; Psecond=1;
 
+            Calendar secondDate = Calendar.getInstance();
+            Calendar PsecondDate = Calendar.getInstance();
+
+            PsecondDate.set(Calendar.YEAR,1900);
+            PsecondDate.set(Calendar.MONTH,0);
+            PsecondDate.set(Calendar.DAY_OF_MONTH,1);
+            PsecondDate.set(Calendar.HOUR_OF_DAY,0);
+            PsecondDate.set(Calendar.MINUTE,0);
+            PsecondDate.set(Calendar.SECOND,1);
+
             int x_zona_prec=-1, y_zona_prec=-1;
             double x_prec=0.0, y_prec=0.0;
 
@@ -122,10 +133,16 @@ public class CalcolaIndiciLocalita {
             	minute=Integer.parseInt(strLine.substring(36,38));
             	second=Integer.parseInt(strLine.substring(39,41));
 
+                secondDate = Calendar.getInstance();
+                secondDate.set(Calendar.YEAR,year);
+                secondDate.set(Calendar.MONTH,month-1);
+                secondDate.set(Calendar.DAY_OF_MONTH,day);
+                secondDate.set(Calendar.HOUR_OF_DAY,hour);
+                secondDate.set(Calendar.MINUTE,minute);
+                secondDate.set(Calendar.SECOND,second);
+
             	//calcolo della differenza in secondi
-				// BOH
-            	//int diff_in_sec=(second-Psecond)+((minute-Pminute)*60)+((hour-Phour)*3600)+((day-Pday)*86400);
-				int diff_in_sec=(second-Psecond)+((day-Pday)*86400);
+                int diff_in_sec =(int)(secondDate.getTimeInMillis()-PsecondDate.getTimeInMillis())/1000;
 
 				//calcolo della zona in qui risiede la posizione valutata
             	int x_zona=(int)((x-Xmin)/GradiLatoX);
@@ -146,6 +163,14 @@ public class CalcolaIndiciLocalita {
 
             	Pday=day;	Pmonth=month;	Pyear=year;
             	Phour=hour;	Pminute=minute;	Psecond=second;
+
+                PsecondDate.set(Calendar.YEAR,year);
+                PsecondDate.set(Calendar.MONTH,month-1);
+                PsecondDate.set(Calendar.DAY_OF_MONTH,day);
+                PsecondDate.set(Calendar.HOUR_OF_DAY,hour);
+                PsecondDate.set(Calendar.MINUTE,minute);
+                PsecondDate.set(Calendar.SECOND,second);
+
             	x_zona_prec=x_zona;		y_zona_prec=y_zona;
             	x_prec=x;	y_prec=y;
             }

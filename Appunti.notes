@@ -69,3 +69,14 @@ long yourmilliseconds = System.currentTimeMillis();
 SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
 Date resultdate = new Date(yourmilliseconds);
 System.out.println("Set ("+i+")("+j+") - "+sdf.format(resultdate));
+
+
+################################################################################################################################################
+
+Plot con Octave
+
+load "path_file_X";
+load "path_file_Y";
+load "path_file_Z";
+[xx,yy] = meshgrid(x,y);
+mesh(xx,yy,z) oppure meshc(xx,yy,z);

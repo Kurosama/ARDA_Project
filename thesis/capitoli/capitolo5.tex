@@ -8,40 +8,40 @@ In seguito si \`e voluto apportare dei miglioramenti:
 \end{enumerate}
 Come ultima parte, si \`e voluto implementare un'interfaccia grafica per poter visualizzare
 i risultati in modo semplice e veloce, senza dimenticare la possibilit\`a di esportare i
-dati in file CSV
+dati in file CSV.
 
 \section{Considerazioni}
 La conversione del codice da Python a Java, dopo l'attenta analisi del codice e di tutte
 le sue funzionalit\`a e varianti, \`e stata abbastanza immediata, non trovando procedure o
-funzioni differenti tra i due linguaggi.\\
+funzioni radicalmente differenti tra i due linguaggi.\\
 Invece lo sviluppo dell'interfaccia grafica ha richiesto molta pi\`u attenzione.
-Java non da nativamente le possibilit\`a di sviluppare interfacce tramite dei tool esterni
-senza generare codice pesante e alle volte molto complesso a fronte delle semplicit\`a dell'interfaccia.
+Java non d\`a nativamente la possibilit\`a di sviluppare interfacce tramite dei tool esterni
+senza generare codice pesante e alle volte molto complesso a fronte della semplicit\`a dell'interfaccia.
 Lo stesso sistema di gestione dei componenti e della loro dimensione e posizione non \`e
 intuitivo. Confrontandolo con linguaggi simili come C++ e lo stesso Python che, mediante
-librerie grafiche specifiche danno la possibilit\`a creare interfacce grafiche, Java ha una
+librerie grafiche specifiche danno la possibilit\`a di creare interfacce grafiche, Java ha una
 gestione abbastanza macchinosa per quando riguarda la composizione delle interfacce grafiche.
 Stesso discorso vale per la mancanza di vere e proprie librerie per la gestione dei grafici
-senza doversi appoggiare a libreria esterne a quelle di Java stessa.\\
+senza doversi appoggiare a librerie esterne a quelle di Java stessa.\\
 Queste mancanze non hanno comportato criticit\`a nello sviluppo del programma ma non hanno
 nemmeno agevolato lo sviluppo della parte grafica.
 
 \section{Sviluppi futuri}
-In tutto lo scritto ci sono state alcne riflessioni in merito a possibili sviluppi
+In tutto lo scritto ci sono state alcune riflessioni in merito a possibili sviluppi
 sia del modello considerato, sia dell'algoritmo.\\
-Un possibile sviluppo pu\`o essere l'aumento di variabili analizzate per determianre
-l'importanza di un luogo, incorporando all'analisi degli spostamenti terrestri anche
+Un possibile sviluppo pu\`o essere l'aumento di variabili analizzate per determinare
+l'importanza di un luogo, incorporando nell'analisi degli spostamenti terrestri anche
 altri fattori di interesse ottenibili da reti sociali oppure da altri applicativi.\\
 Nel capitolo 4 si \`e potuto notare come l'algoritmo di calcolo della matrice $M_{imp}$
-per l'indece \textit{spaceRank} ha tempi di esecuzione molto elevati. Su questo punto
-si potrebbe valutare nuovi approcci per il calcolo dell'autovettore e delle relative
+per l'indice \textit{spaceRank} abbia tempi di esecuzione molto elevati. Su questo punto
+si potrebbero valutare nuovi approcci per il calcolo dell'autovettore e delle relative
 matrici. Una semplice soluzione interessante, anche per gli altri indici, sarebbe quella
-di poter tenere memorizzata la matrice di interesse a seconde delle dimensioni delle localit\`a.
-Queste poterebbe ad avere una prima esecuzione molto lenta ma per le analisi successive sarebbe
-immedaite visto che la criticit\`a \`e proprio nella generazione delle matrici.
-Questo avvantaggerebbe anche nuovo immissimo di valori perch\`e comporterebbe l'aggioramento
+di poter tenere memorizzata la matrice di interesse a seconda delle dimensioni delle localit\`a.
+Ci\`o poterebbe ad avere una prima esecuzione molto lenta ma per le analisi successive sarebbe
+immediata visto che la criticit\`a \`e proprio nella generazione delle matrici.
+Questo avvantaggerebbe anche una nuova immissione di valori perch\'e comporterebbe l'aggiornamento
 di una sola cella.
-Un'altro sviluppo interessante potrebbe essere lo sviluppo di un servizio web che esegua:
+Un altro sviluppo interessante potrebbe essere lo sviluppo di un servizio web che esegua:
 \begin{itemize}
 \item Lato server tutta la gestione dell'aggiornamento delle matrici e l'esecuzione della possibile destinazione;
 \item Lato client si avrebbe l'invio della posizione al server, la ricezione e la visualizzazione dei dati ottenuti.
@@ -51,5 +51,5 @@ Un esempio simile pu\`o essere Google Maps
 \item Lato server avviene il calcolo dei persorsi pi\`u veloci a seconda delle richieste dell'utente
 \item Lato client si ha l'invio delle coordinate e la visualizzazione in tempo reale della mappa e del percorso calcolato dal server.
 \end{itemize}
-Questo potrebbe anche risolvere i tempi di esecuzione dell'indice \textit{spaceRank} visto
-l'enorme potenza di calcolo che gli attuali servizi cloud come Google ed Amazon forniscono alla loro clientela.
+Questo potrebbe anche risolvere i tempi di esecuzione dell'indice \textit{spaceRank} vista
+l'enorme potenza di calcolo che gli attuali servizi cloud di Google ed Amazon forniscono alla loro clientela.
