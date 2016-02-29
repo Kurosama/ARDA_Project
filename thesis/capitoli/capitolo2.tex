@@ -56,18 +56,11 @@ introdurla sopratutto per avere una base di sviluppo pi\`u accurata.
 
 \subsubsection{Calcolo della matrice accelerazione}
 Nel calcolo delle matrici ARDA, per ottenere la matrice delle accelerazione $M_{acc}$ si esegue, sulla
-matrice $M_{imp}$, una funzione gradiente per calcolare i valori del vettore in tutte le zone. Come si pu\`o
-vedere in FIGURA 2.1, la matrice generata ha ottimi risultati con punti di importanza distanti tra loro
+matrice $M_{imp}$, una funzione gradiente per calcolare i valori del vettore in tutte le zone.
+La matrice generata ha ottimi risultati con punti di importanza distanti tra loro
 ma con punti vicini il calcolo del vettore ha qualche incongruenza nelle zone adiacenti.\\
 Utilizzando l'algoritmo di Sobel, questo distribuisce con maggior equit\`a le forze anche in presenza di
 molti punti di interessi vicini tra loro.\\
-\begin{figure}
-    \begin{center}
-    \includegraphics[scale=0.4]{tt.png}
-    \caption[Macc]{Matrice di accelerazione}
-    \label{etichetta}
-    \end{center}
-\end{figure}
 Sia nel precedente progetto che in questo, la matrice di accelerazione viene calcolata dopo un solo processo
 della matrice $M_{imp}$ calcolando le forze solo nelle zone adiacenti a quelle con dei valori di interesse.
 Pensando proprio all'idea su cui si basa l'utilizzo delle matrici di accelerazione si pu\`o capire quanto possa
